@@ -1,0 +1,17 @@
+D:\Self learning\Projects\FinanceApp\FinanceApp.Server\FinanceApp.Application\bin\Debug\net6.0\FinanceApp.Application.deps.json
+D:\Self learning\Projects\FinanceApp\FinanceApp.Server\FinanceApp.Application\bin\Debug\net6.0\FinanceApp.Application.dll
+D:\Self learning\Projects\FinanceApp\FinanceApp.Server\FinanceApp.Application\bin\Debug\net6.0\FinanceApp.Application.pdb
+D:\Self learning\Projects\FinanceApp\FinanceApp.Server\FinanceApp.Application\obj\Debug\net6.0\FinanceApp.Application.GeneratedMSBuildEditorConfig.editorconfig
+D:\Self learning\Projects\FinanceApp\FinanceApp.Server\FinanceApp.Application\obj\Debug\net6.0\FinanceApp.Application.AssemblyInfoInputs.cache
+D:\Self learning\Projects\FinanceApp\FinanceApp.Server\FinanceApp.Application\obj\Debug\net6.0\FinanceApp.Application.AssemblyInfo.cs
+D:\Self learning\Projects\FinanceApp\FinanceApp.Server\FinanceApp.Application\obj\Debug\net6.0\FinanceApp.Application.csproj.CoreCompileInputs.cache
+D:\Self learning\Projects\FinanceApp\FinanceApp.Server\FinanceApp.Application\obj\Debug\net6.0\FinanceApp.Application.dll
+D:\Self learning\Projects\FinanceApp\FinanceApp.Server\FinanceApp.Application\obj\Debug\net6.0\refint\FinanceApp.Application.dll
+D:\Self learning\Projects\FinanceApp\FinanceApp.Server\FinanceApp.Application\obj\Debug\net6.0\FinanceApp.Application.pdb
+D:\Self learning\Projects\FinanceApp\FinanceApp.Server\FinanceApp.Application\obj\Debug\net6.0\ref\FinanceApp.Application.dll
+D:\Self learning\Projects\FinanceApp\FinanceApp.Server\FinanceApp.Application\bin\Debug\net6.0\FinanceApp.Domain.dll
+D:\Self learning\Projects\FinanceApp\FinanceApp.Server\FinanceApp.Application\bin\Debug\net6.0\FinanceApp.Infrastructure.dll
+D:\Self learning\Projects\FinanceApp\FinanceApp.Server\FinanceApp.Application\bin\Debug\net6.0\FinanceApp.Infrastructure.pdb
+D:\Self learning\Projects\FinanceApp\FinanceApp.Server\FinanceApp.Application\bin\Debug\net6.0\FinanceApp.Domain.pdb
+D:\Self learning\Projects\FinanceApp\FinanceApp.Server\FinanceApp.Application\obj\Debug\net6.0\FinanceApp.Application.csproj.AssemblyReference.cache
+D:\Self learning\Projects\FinanceApp\FinanceApp.Server\FinanceApp.Application\obj\Debug\net6.0\FinanceA.A82E5256.Up2Date

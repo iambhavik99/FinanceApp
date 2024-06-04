@@ -1,0 +1,15 @@
+D:\Self learning\Projects\FinanceApp\FinanceApp.Server\FinanceApp.Infrastructure\bin\Debug\net6.0\FinanceApp.Infrastructure.deps.json
+D:\Self learning\Projects\FinanceApp\FinanceApp.Server\FinanceApp.Infrastructure\bin\Debug\net6.0\FinanceApp.Infrastructure.dll
+D:\Self learning\Projects\FinanceApp\FinanceApp.Server\FinanceApp.Infrastructure\bin\Debug\net6.0\FinanceApp.Infrastructure.pdb
+D:\Self learning\Projects\FinanceApp\FinanceApp.Server\FinanceApp.Infrastructure\bin\Debug\net6.0\FinanceApp.Domain.dll
+D:\Self learning\Projects\FinanceApp\FinanceApp.Server\FinanceApp.Infrastructure\bin\Debug\net6.0\FinanceApp.Domain.pdb
+D:\Self learning\Projects\FinanceApp\FinanceApp.Server\FinanceApp.Infrastructure\obj\Debug\net6.0\FinanceApp.Infrastructure.csproj.AssemblyReference.cache
+D:\Self learning\Projects\FinanceApp\FinanceApp.Server\FinanceApp.Infrastructure\obj\Debug\net6.0\FinanceApp.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+D:\Self learning\Projects\FinanceApp\FinanceApp.Server\FinanceApp.Infrastructure\obj\Debug\net6.0\FinanceApp.Infrastructure.AssemblyInfoInputs.cache
+D:\Self learning\Projects\FinanceApp\FinanceApp.Server\FinanceApp.Infrastructure\obj\Debug\net6.0\FinanceApp.Infrastructure.AssemblyInfo.cs
+D:\Self learning\Projects\FinanceApp\FinanceApp.Server\FinanceApp.Infrastructure\obj\Debug\net6.0\FinanceApp.Infrastructure.csproj.CoreCompileInputs.cache
+D:\Self learning\Projects\FinanceApp\FinanceApp.Server\FinanceApp.Infrastructure\obj\Debug\net6.0\FinanceA.F8861955.Up2Date
+D:\Self learning\Projects\FinanceApp\FinanceApp.Server\FinanceApp.Infrastructure\obj\Debug\net6.0\FinanceApp.Infrastructure.dll
+D:\Self learning\Projects\FinanceApp\FinanceApp.Server\FinanceApp.Infrastructure\obj\Debug\net6.0\refint\FinanceApp.Infrastructure.dll
+D:\Self learning\Projects\FinanceApp\FinanceApp.Server\FinanceApp.Infrastructure\obj\Debug\net6.0\FinanceApp.Infrastructure.pdb
+D:\Self learning\Projects\FinanceApp\FinanceApp.Server\FinanceApp.Infrastructure\obj\Debug\net6.0\ref\FinanceApp.Infrastructure.dll
