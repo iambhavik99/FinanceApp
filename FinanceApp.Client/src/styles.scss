@@ -1,4 +1,95 @@
 /* You can add global styles to this file, and also import other style files */
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+
+@use "palette.scss" as palette;
+@use "@angular/material" as mat;
+// Plus imports for other components in your app.
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$app-primary: mat.define-palette(palette.$primary);
+$app-accent: mat.define-palette(palette.$primary);
+
+// The warn palette is optional (defaults to red).
+$app-warn: mat.define-palette(palette.$warn);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+$app-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $app-primary,
+      accent: $app-accent,
+      warn: $app-warn,
+    ),
+    density: minimum,
+  )
+);
+
+.mat-mdc-form-field {
+  @include mat.form-field-density(minimum);
+  @include mat.input-density(minimum);
+  @include mat.select-density(minimum);
+  @include mat.dialog-density(minimum);
+}
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include mat.all-component-themes($app-theme);
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: "Archivo", "Helvetica Neue", sans-serif;
+}
+
+.mat-mdc-form-field.mat-mdc-form-field.mat-mdc-form-field.mat-mdc-form-field.mat-mdc-form-field
+  .mdc-notched-outline__notch {
+  border-right-style: hidden;
+}
+
+.mat-mdc-raised-button:not(:disabled),
+.mat-mdc-unelevated-button:not(:disabled) {
+  color: white !important;
+}
+
+.mdc-button {
+  height: 36px !important;
+}
+
+.mdc-button.btn-primary {
+  background-color: #0d9488 !important;
+  color: white !important;
+  min-width: 100px;
+}
+
+.mdc-button.btn-secondary {
+  background-color: white !important;
+  color: #0d9488 !important;
+  min-width: 100px;
+  border: 1px solid #0d9488;
+}
+.mdc-button.btn-warn {
+  background-color: #ef4444 !important;
+  color: white !important;
+  min-width: 100px;
+}
+
+.mdc-button.btn-primary[disabled] {
+  background-color: lightgray !important;
+  cursor: not-allowed !important;
+}

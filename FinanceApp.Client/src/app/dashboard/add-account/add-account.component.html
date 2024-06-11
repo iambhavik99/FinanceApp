@@ -1,0 +1,48 @@
+<div mat-dialog-title class="flex items-center">
+  <span class="text-teal-600 font-semibold text-lg"> Add account </span>
+</div>
+<mat-dialog-content>
+  <form [formGroup]="accountForm" (submit)="saveAccount()" class="py-2">
+    <div class="w-full">
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Name</mat-label>
+        <input
+          matInput
+          type="text"
+          name="account-name"
+          formControlName="accountName"
+        />
+      </mat-form-field>
+    </div>
+
+    <div class="w-full">
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Balance</mat-label>
+        <input
+          matInput
+          type="number"
+          name="balance"
+          formControlName="balance"
+        />
+      </mat-form-field>
+    </div>
+
+    <div class="w-2/5 mr-2 flex">
+      <button
+        mat-flat-button
+        class="btn-primary w-full mx-2"
+        type="submit"
+        [disabled]="accountForm.invalid"
+      >
+        SAVE
+      </button>
+      <button
+        mat-flat-button
+        class="btn-secondary w-full"
+        mat-dialog-close="false"
+      >
+        CANCEL
+      </button>
+    </div>
+  </form>
+</mat-dialog-content>
