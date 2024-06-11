@@ -13,7 +13,8 @@ builder.Services.AddControllers();
 
 // Register ApplicationDbContext with SQL Server provider
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnectionString");
-builder.Services.AddDbContext<ApplicationDBContext>(options => {
+builder.Services.AddDbContext<ApplicationDBContext>(options =>
+{
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
 });
 
@@ -41,6 +42,14 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors(options =>
+{
+    options.WithOrigins("http://localhost:4200")
+    .AllowAnyMethod()
+    .AllowAnyHeader()
+    .AllowCredentials();
+});
 
 app.UseHttpsRedirection();
 
