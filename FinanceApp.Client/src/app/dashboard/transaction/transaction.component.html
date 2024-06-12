@@ -11,6 +11,9 @@
             >
               {{ account.accountName }}
             </mat-option>
+            <mat-option *ngIf="accounts?.items?.length == 0"
+              >No accounts found</mat-option
+            >
           </mat-select>
         </mat-form-field>
       </div>

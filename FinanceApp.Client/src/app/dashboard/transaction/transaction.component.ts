@@ -31,7 +31,7 @@ export class TransactionComponent implements OnInit {
   initializeForm() {
     this.transactionForm = new FormGroup({
       accountId: new FormControl("", [Validators.required]),
-      amount: new FormControl(0, [Validators.required]),
+      amount: new FormControl(0, [Validators.required, Validators.min(1)]),
       description: new FormControl("", [Validators.required]),
     });
   }

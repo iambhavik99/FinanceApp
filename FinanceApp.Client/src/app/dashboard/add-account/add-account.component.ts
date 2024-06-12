@@ -27,7 +27,7 @@ export class AddAccountComponent implements OnInit {
   initializeForm() {
     this.accountForm = new FormGroup({
       accountName: new FormControl("", Validators.required),
-      balance: new FormControl(0, Validators.required)
+      balance: new FormControl(0, [Validators.required, Validators.min(1)])
     });
   }
 

@@ -1,7 +1,7 @@
 <div class="min-h-screen flex items-center justify-center bg-gray-100">
   <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-sm">
-    <h2 class="text-2xl font-bold mb-6 text-center">Login</h2>
-    <form [formGroup]="loginForm" (submit)="login()">
+    <h2 class="text-2xl font-bold mb-6 text-center">{{ state | titlecase }}</h2>
+    <form [formGroup]="loginForm" (submit)="onSubmit()">
       <div class="mb-4">
         <label class="block text-sm font-medium text-gray-700">Username</label>
         <input
@@ -13,7 +13,7 @@
           formControlName="username"
         />
       </div>
-      <div class="mb-4">
+      <div class="mb-4" *ngIf="state == 'SIGNUP'">
         <label class="block text-sm font-medium text-gray-700" for="email"
           >Email address</label
         >
@@ -41,15 +41,22 @@
       </div>
       <div class="flex items-center justify-between">
         <button
-          class="text-white"
+          class="text-white w-full"
           mat-raised-button
           color="primary"
           type="submit"
           [disabled]="isLoginFormValid()"
         >
-          Login
+          {{ state | titlecase }}
         </button>
       </div>
     </form>
+
+    <div
+      class="flex items-center justify-center text-teal-500 hover:underline pt-3"
+      (click)="onChangeStatus()"
+    >
+      {{ state === "LOGIN" ? "Create new account?" : "Existing user" }}
+    </div>
   </div>
 </div>

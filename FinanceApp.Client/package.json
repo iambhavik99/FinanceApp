@@ -20,6 +20,8 @@
     "@angular/platform-browser": "^16.2.0",
     "@angular/platform-browser-dynamic": "^16.2.0",
     "@angular/router": "^16.2.0",
+    "bcryptjs": "^2.4.3",
+    "js-base64": "^3.7.7",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.13.0"
@@ -28,6 +30,7 @@
     "@angular-devkit/build-angular": "^16.2.0",
     "@angular/cli": "~16.2.0",
     "@angular/compiler-cli": "^16.2.0",
+    "@types/bcryptjs": "^2.4.6",
     "@types/jasmine": "~4.3.0",
     "autoprefixer": "^10.4.19",
     "jasmine-core": "~4.6.0",
