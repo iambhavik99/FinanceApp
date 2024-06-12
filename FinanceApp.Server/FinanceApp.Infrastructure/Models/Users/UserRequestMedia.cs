@@ -12,4 +12,10 @@ namespace FinanceApp.Infrastructure.Models.Users
         public string email { get; set; }
         public string password { get; set; }
     }
+
+    public class UserLoginRequestMedia
+    {
+        public string username { get; set; }
+        public string password { get; set; }
+    }
 }

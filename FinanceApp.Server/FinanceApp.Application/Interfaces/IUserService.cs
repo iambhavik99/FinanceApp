@@ -9,7 +9,9 @@ namespace FinanceApp.Application.Interfaces
 {
     public interface IUserService
     {
-        public Task<UserResponseMedia> AddUser(UserRequestMedia userRequestMedia);
+        public Task<UserResponseMedia> SignUp(UserRequestMedia userRequestMedia);
+        public Task<UserResponseMedia> login(UserLoginRequestMedia userLoginRequestMedia, string aesKeyString, string ivString);
+        public bool authenticate(string password, string hashPassword, string aesKeyString, string ivString);
 
     }
 }

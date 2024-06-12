@@ -18,7 +18,7 @@ namespace FinanceApp.Infrastructure.Repositories
         {
             _context = dbContext;
         }
-        public async Task<UserResponseMedia> AddUser(UserRequestMedia userRequestMedia)
+        public async Task<UserResponseMedia> SignUp(UserRequestMedia userRequestMedia)
         {
             Users users = new Users();
 
@@ -44,6 +44,17 @@ namespace FinanceApp.Infrastructure.Repositories
                 };
             }
             return null;
+        }
+
+        public async Task<Users> login(UserLoginRequestMedia userLoginRequestMedia)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.username == userLoginRequestMedia.username);
+            if (user == null)
+            {
+                throw new Exception("User not found.");
+            }
+
+            return user;
         }
     }
 }

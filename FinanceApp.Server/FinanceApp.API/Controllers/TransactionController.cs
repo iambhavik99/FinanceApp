@@ -2,12 +2,14 @@
 using FinanceApp.Application.Services;
 using FinanceApp.Infrastructure.Models.Accounts;
 using FinanceApp.Infrastructure.Models.Transactions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FinanceApp.API.Controllers
 {
-    [ApiController]
     [Route("api/transactions")]
+    [Authorize]
+    [ApiController]
     public class TransactionController : Controller
     {
         private readonly ITransactionService _transactionService;

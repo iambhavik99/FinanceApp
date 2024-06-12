@@ -1,13 +1,15 @@
 ﻿using FinanceApp.Application.Interfaces;
 using FinanceApp.Infrastructure.Models.Accounts;
 using FinanceApp.Infrastructure.Models.Users;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FinanceApp.API.Controllers
 {
 
-    [ApiController]
     [Route("api/accounts")]
+    [Authorize]
+    [ApiController]
     public class AccountsController : Controller
     {
 
