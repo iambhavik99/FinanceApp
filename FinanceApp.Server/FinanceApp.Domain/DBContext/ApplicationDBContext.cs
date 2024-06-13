@@ -18,6 +18,7 @@ namespace FinanceApp.Domain.DBContext
         public DbSet<Users> Users { get; set; }
         public DbSet<Accounts> Accounts { get; set; }
         public DbSet<Transactions> Transactions { get; set; }
+        public DbSet<Categories> Categories { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -28,16 +29,17 @@ namespace FinanceApp.Domain.DBContext
                 entity.Property(e => e.username).IsRequired();
                 entity.Property(e => e.email).IsRequired();
                 entity.Property(e => e.password).IsRequired();
-                entity.Property(e => e.createdAt).HasDefaultValueSql("CURRENT_TIMESTAMP(6)");
+                entity.Property(e => e.createdAt).IsRequired();
+                entity.Property(e => e.updatedAt).IsRequired(); ;
             });
 
             modelBuilder.Entity<Accounts>(entity =>
             {
                 entity.HasKey(e => e.id);
-                entity.Property(e => e.accountName).IsRequired();
-                entity.Property(e => e.balance).HasColumnType("decimal(15, 2)").HasDefaultValue(0.00);
-                entity.Property(e => e.createdAt).HasDefaultValueSql("CURRENT_TIMESTAMP(6)");
-                entity.Property(e => e.updatedAt).HasDefaultValueSql("CURRENT_TIMESTAMP(6)");
+                entity.Property(e => e.name).IsRequired();
+                entity.Property(e => e.balance).IsRequired().HasColumnType("decimal(18, 2)");
+                entity.Property(e => e.createdAt).IsRequired();
+                entity.Property(e => e.updatedAt).IsRequired();
 
                 entity.HasOne(e => e.User)
                     .WithMany(u => u.Accounts)
@@ -45,18 +47,35 @@ namespace FinanceApp.Domain.DBContext
                     .OnDelete(DeleteBehavior.Cascade);
             });
 
+            modelBuilder.Entity<Categories>(entity =>
+            {
+                entity.HasKey(e => e.id);
+                entity.Property(e => e.name).IsRequired();
+            });
+
             modelBuilder.Entity<Transactions>(entity =>
             {
                 entity.HasKey(e => e.id);
-                entity.Property(e => e.transactionType).IsRequired();
+                entity.Property(e => e.type).IsRequired();
                 entity.Property(e => e.amount).HasColumnType("decimal(15, 2)").IsRequired();
-                entity.Property(e => e.transactionDate).IsRequired();
+                entity.Property(e => e.createdAt).IsRequired();
                 entity.Property(e => e.description);
-                entity.Property(e => e.createdAt).HasDefaultValueSql("CURRENT_TIMESTAMP(6)");
+                entity.Property(e => e.note);
+                entity.Property(e => e.createdAt).IsRequired();
+
+                entity.HasOne(e => e.User)
+                    .WithMany(u => u.Transactions)
+                    .HasForeignKey(e => e.userId)
+                    .OnDelete(DeleteBehavior.Cascade);
 
                 entity.HasOne(e => e.Account)
                     .WithMany(a => a.Transactions)
                     .HasForeignKey(e => e.accountId)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasOne(e => e.Category)
+                    .WithMany(a => a.Transaction)
+                    .HasForeignKey(e => e.categoryId)
                     .OnDelete(DeleteBehavior.Cascade);
 
             });

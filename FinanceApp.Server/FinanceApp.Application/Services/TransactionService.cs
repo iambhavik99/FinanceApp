@@ -23,9 +23,9 @@ namespace FinanceApp.Application.Services
             return response;
         }
 
-        public async Task<TransactionsResponseMedia> SaveTransaction(TransactionsRequestMedia transactionsRequestMedia)
+        public async Task<TransactionsResponseMedia> SaveTransaction(TransactionsRequestMedia transactionsRequestMedia, Guid userId)
         {
-            var response = await _transactionRepository.SaveTransaction(transactionsRequestMedia);
+            var response = await _transactionRepository.SaveTransaction(transactionsRequestMedia, userId);
             return response;
         }
     }

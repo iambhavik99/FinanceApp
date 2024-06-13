@@ -20,21 +20,29 @@ namespace FinanceApp.Infrastructure.Repositories
         {
             _context = context;
         }
-        public async Task<TransactionsResponseMedia> GetAllTransactions(Guid accountId)
+        public async Task<TransactionsResponseMedia> GetAllTransactions(Guid usersId)
         {
-            var response = await _context.Transactions
-                .Where(transaction => transaction.accountId == accountId)
+            var response = await (
+                from accout in _context.Accounts
+                join transaction in _context.Transactions
+                on accout.id equals transaction.accountId
+                where accout.userId == usersId
+                select transaction
+                )
                 .ToListAsync();
 
             TransactionsResponseMedia transactionsResponseMedia = new TransactionsResponseMedia();
             transactionsResponseMedia.items = response
                 .Select(x => new TransactionMedia
                 {
-                    accountId = accountId,
+                    transactionId = x.id,
+                    accountId = x.accountId,
+                    categoryId = x.categoryId,
                     amount = x.amount,
                     description = x.description,
-                    transactionId = x.id,
-                    transactionType = x.transactionType
+                    transactionType = x.type,
+                    note = x.note,
+                    transactionDate = x.createdAt
                 })
                 .ToList();
 
@@ -42,15 +50,17 @@ namespace FinanceApp.Infrastructure.Repositories
 
         }
 
-        public async Task<TransactionsResponseMedia> SaveTransaction(TransactionsRequestMedia transactionsRequestMedia)
+        public async Task<TransactionsResponseMedia> SaveTransaction(TransactionsRequestMedia transactionsRequestMedia, Guid userId)
         {
             Transactions transactions = new Transactions();
             transactions.id = Guid.NewGuid();
-            transactions.amount = transactionsRequestMedia.amount;
-            transactions.description = transactionsRequestMedia.description;
             transactions.accountId = transactionsRequestMedia.accountId;
-            transactions.transactionType = transactionsRequestMedia.transactionType;
-            transactions.transactionDate = DateTime.UtcNow;
+            transactions.userId = userId;
+            transactions.categoryId = transactionsRequestMedia.categoryId;
+            transactions.amount = transactionsRequestMedia.amount;
+            transactions.note = transactionsRequestMedia.note;
+            transactions.type = transactionsRequestMedia.transactionType;
+            transactions.description = getDescription(transactionsRequestMedia, transactions.id);
             transactions.createdAt = DateTime.UtcNow;
 
             // Update the account balance based on transaction type
@@ -60,19 +70,36 @@ namespace FinanceApp.Infrastructure.Repositories
                 throw new Exception("Account not found");
             }
 
-            if (transactions.transactionType == TransactionType.CREDIT)
+            if (transactions.type == TransactionType.CREDIT)
             {
                 account.balance += transactions.amount;
             }
-            else if (transactions.transactionType == TransactionType.DEBIT)
+            else if (transactions.type == TransactionType.DEBIT)
             {
                 account.balance -= transactions.amount;
             }
 
+            account.updatedAt = DateTime.UtcNow;
+
             await _context.Transactions.AddAsync(transactions);
             await _context.SaveChangesAsync();
 
-            return await GetAllTransactions(transactions.accountId);
+            return await GetAllTransactions(userId);
+        }
+
+
+        public string getDescription(TransactionsRequestMedia transactionsRequestMedia, Guid transactionId)
+        {
+            string accountId = transactionsRequestMedia.accountId.ToString().Substring(0,4);
+            string _transactionId = transactionId.ToString().Substring(0, 4);
+            string note = transactionsRequestMedia.note.ToUpper();
+
+            if (note.Length > 4)
+            {
+                note = note.Substring(0, 4);
+            }
+
+            return $"{_transactionId}-{accountId}-{note}";
         }
     }
 }

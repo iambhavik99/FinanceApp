@@ -25,24 +25,18 @@ namespace FinanceApp.Domain.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
-                    b.Property<string>("accountName")
+                    b.Property<decimal>("balance")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("createdAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("name")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<decimal>("balance")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("decimal(15,2)")
-                        .HasDefaultValue(0m);
-
-                    b.Property<DateTime>("createdAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime(6)")
-                        .HasDefaultValueSql("CURRENT_TIMESTAMP(6)");
-
                     b.Property<DateTime>("updatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime(6)")
-                        .HasDefaultValueSql("CURRENT_TIMESTAMP(6)");
+                        .HasColumnType("datetime(6)");
 
                     b.Property<Guid>("userId")
                         .HasColumnType("char(36)");
@@ -52,6 +46,22 @@ namespace FinanceApp.Domain.Migrations
                     b.HasIndex("userId");
 
                     b.ToTable("Accounts");
+                });
+
+            modelBuilder.Entity("FinanceApp.Domain.Models.Categories", b =>
+                {
+                    b.Property<Guid>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.HasKey("id");
+
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("FinanceApp.Domain.Models.Transactions", b =>
@@ -66,25 +76,34 @@ namespace FinanceApp.Domain.Migrations
                     b.Property<decimal>("amount")
                         .HasColumnType("decimal(15,2)");
 
+                    b.Property<Guid>("categoryId")
+                        .HasColumnType("char(36)");
+
                     b.Property<DateTime>("createdAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime(6)")
-                        .HasDefaultValueSql("CURRENT_TIMESTAMP(6)");
+                        .HasColumnType("datetime(6)");
 
                     b.Property<string>("description")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<DateTime>("transactionDate")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("transactionType")
+                    b.Property<string>("note")
                         .IsRequired()
                         .HasColumnType("longtext");
+
+                    b.Property<string>("type")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<Guid>("userId")
+                        .HasColumnType("char(36)");
 
                     b.HasKey("id");
 
                     b.HasIndex("accountId");
+
+                    b.HasIndex("categoryId");
+
+                    b.HasIndex("userId");
 
                     b.ToTable("Transactions");
                 });
@@ -96,21 +115,25 @@ namespace FinanceApp.Domain.Migrations
                         .HasColumnType("char(36)");
 
                     b.Property<DateTime>("createdAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime(6)")
-                        .HasDefaultValueSql("CURRENT_TIMESTAMP(6)");
+                        .HasColumnType("datetime(6)");
 
                     b.Property<string>("email")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
 
                     b.Property<string>("password")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<DateTime>("updatedAt")
+                        .HasColumnType("datetime(6)");
 
                     b.Property<string>("username")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
 
                     b.HasKey("id");
 
@@ -136,7 +159,23 @@ namespace FinanceApp.Domain.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("FinanceApp.Domain.Models.Categories", "Category")
+                        .WithMany("Transaction")
+                        .HasForeignKey("categoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FinanceApp.Domain.Models.Users", "User")
+                        .WithMany("Transactions")
+                        .HasForeignKey("userId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Account");
+
+                    b.Navigation("Category");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("FinanceApp.Domain.Models.Accounts", b =>
@@ -144,9 +183,16 @@ namespace FinanceApp.Domain.Migrations
                     b.Navigation("Transactions");
                 });
 
+            modelBuilder.Entity("FinanceApp.Domain.Models.Categories", b =>
+                {
+                    b.Navigation("Transaction");
+                });
+
             modelBuilder.Entity("FinanceApp.Domain.Models.Users", b =>
                 {
                     b.Navigation("Accounts");
+
+                    b.Navigation("Transactions");
                 });
 #pragma warning restore 612, 618
         }

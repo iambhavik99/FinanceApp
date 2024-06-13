@@ -4,6 +4,7 @@ using FinanceApp.Infrastructure.Models.Accounts;
 using FinanceApp.Infrastructure.Models.Transactions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace FinanceApp.API.Controllers
 {
@@ -31,7 +32,8 @@ namespace FinanceApp.API.Controllers
         [HttpPost]
         public async Task<ActionResult<TransactionsResponseMedia>> SaveTransaction(TransactionsRequestMedia transactionsRequestMedia)
         {
-            var response = await _transactionService.SaveTransaction(transactionsRequestMedia);
+            Guid userId = new Guid(User?.Claims?.FirstOrDefault(c => c?.Type == ClaimTypes.Actor)?.ToString());
+            var response = await _transactionService.SaveTransaction(transactionsRequestMedia, userId);
             if (response != null)
             {
                 return Ok(response);

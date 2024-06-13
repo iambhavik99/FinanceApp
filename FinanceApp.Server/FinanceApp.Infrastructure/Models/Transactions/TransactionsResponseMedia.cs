@@ -9,8 +9,9 @@ namespace FinanceApp.Infrastructure.Models.Transactions
     public class TransactionsRequestMedia
     {
         public Guid accountId { get; set; }
+        public Guid categoryId { get; set; }
         public int amount { get; set; }
-        public string description { get; set; }
+        public string note { get; set; }
         public string transactionType { get; set; }
     }
 }

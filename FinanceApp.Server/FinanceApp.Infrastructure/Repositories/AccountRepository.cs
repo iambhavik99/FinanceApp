@@ -34,7 +34,7 @@ namespace FinanceApp.Infrastructure.Repositories
             accountResponseMedia.items = response.ToArray().Select(x => new AccountsList()
             {
                 accountId = x.id,
-                accountName = x.accountName,
+                accountName = x.name,
                 balance = x.balance,
             }).ToList();
 
@@ -46,7 +46,7 @@ namespace FinanceApp.Infrastructure.Repositories
         {
             Accounts account = new Accounts();
             account.id = Guid.NewGuid();
-            account.accountName = accountRequestMedia.accountName;
+            account.name = accountRequestMedia.accountName;
             account.balance = accountRequestMedia.balance;
             account.userId = accountRequestMedia.userId;
             account.createdAt = DateTime.UtcNow;

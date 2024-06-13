@@ -12,7 +12,6 @@ namespace FinanceApp.Infrastructure.Interfaces
     {
         public Task<UserResponseMedia> SignUp(UserRequestMedia userRequestMedia);
         public Task<Users> login(UserLoginRequestMedia userLoginRequestMedia);
-
-
+        public Task<UserResponseMedia> GetUserInfo(Guid userId);
     }
 }

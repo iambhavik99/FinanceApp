@@ -14,14 +14,21 @@ namespace FinanceApp.Domain.Models
         [Key]
         public Guid id { get; set; }
         public Guid accountId { get; set; }
+        [ForeignKey("accountId")]
+        public Accounts Account { get; set; }
+        public Guid userId { get; set; }
+        [ForeignKey("userId")]
+        public Users User { get; set; }
         [Required]
         public int amount { get; set; }
         [Required]
+        public string type { get; set; }
+        public Guid categoryId { get; set; }
+        [ForeignKey("categoryId")]
+        public Categories Category { get; set; }
         public string description { get; set; }
-        public string transactionType { get; set; }
-        public DateTime transactionDate { get; set; } = DateTime.UtcNow;
+        public string note { get; set; }
         public DateTime createdAt { get; set; } = DateTime.UtcNow;
-        public Accounts Account { get; set; }
 
     }
 }
