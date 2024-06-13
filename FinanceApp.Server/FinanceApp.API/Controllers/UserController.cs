@@ -70,5 +70,20 @@ namespace FinanceApp.API
             return BadRequest();
         }
 
+
+        [Authorize]
+        [HttpGet("info")]
+        public async Task<IActionResult> GetUserInfo()
+        {
+            Guid userId = new Guid(User?.Claims?.FirstOrDefault(c => c?.Type == ClaimTypes.Actor).Value?.ToString());
+            var response = await _userService.GetUserInfo(userId);
+
+            if (response != null)
+            {
+                return Ok(response);
+            }
+            return BadRequest();
+
+        }
     }
 }

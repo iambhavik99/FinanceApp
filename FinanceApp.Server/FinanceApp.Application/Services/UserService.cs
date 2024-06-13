@@ -40,6 +40,11 @@ namespace FinanceApp.Application.Services
             return null;
         }
 
+        public async Task<UserResponseMedia> GetUserInfo(Guid userId)
+        {
+            return await _userRepository.GetUserInfo(userId);
+        }
+
         public bool authenticate(string password, string hashPassword, string aesKeyString, string ivString)
         {
 
@@ -49,9 +54,6 @@ namespace FinanceApp.Application.Services
             return decrypt(password, aesKey, iv) == decrypt(hashPassword, aesKey, iv);
 
         }
-
-
-
 
         public string decrypt(string encryptedString, byte[] aesKey, byte[] iv)
         {

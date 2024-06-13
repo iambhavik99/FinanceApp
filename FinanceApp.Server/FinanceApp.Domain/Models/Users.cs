@@ -13,13 +13,17 @@ namespace FinanceApp.Domain.Models
         [Key]
         public Guid id { get; set; }
         [Required]
+        [MaxLength(100)]
         public string username { get; set; }
         [Required]
+        [MaxLength(100)]
         public string email { get; set; }
-        [Required]
+        [MaxLength(100)]
         public string password { get; set; }
         public DateTime createdAt { get; set; }
+        public DateTime updatedAt { get; set; }
         public ICollection<Accounts> Accounts { get; set; }
+        public ICollection<Transactions> Transactions { get; set; }
 
     }
 }

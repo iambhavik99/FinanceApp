@@ -56,5 +56,29 @@ namespace FinanceApp.Infrastructure.Repositories
 
             return user;
         }
+
+        public async Task<UserResponseMedia> GetUserInfo(Guid userId)
+        {
+            try
+            {
+                var user = await _context.Users.FirstOrDefaultAsync(x => x.id == userId);
+                
+                UserResponseMedia userResponseMedia = new UserResponseMedia();
+                if (user != null) { 
+                    
+                    userResponseMedia.id = userId;
+                    userResponseMedia.username = user.username;
+                    userResponseMedia.email = user.email;
+                }
+
+                return userResponseMedia;
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
     }
 }
