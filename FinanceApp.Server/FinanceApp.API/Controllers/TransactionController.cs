@@ -14,14 +14,16 @@ namespace FinanceApp.API.Controllers
     public class TransactionController : Controller
     {
         private readonly ITransactionService _transactionService;
-        public TransactionController(ITransactionService transactionService) { 
+        public TransactionController(ITransactionService transactionService)
+        {
             _transactionService = transactionService;
         }
 
         [HttpGet]
-        public async Task<ActionResult<TransactionsResponseMedia>> GetAllTransactions(Guid userId)
+        public async Task<ActionResult<TransactionsResponseMedia>> GetAllTransactions(int limit)
         {
-            var response = await _transactionService.GetAllTransactions(userId);
+            Guid userId = new Guid(User?.Claims?.FirstOrDefault(c => c?.Type == ClaimTypes.Actor).Value?.ToString());
+            var response = await _transactionService.GetAllTransactions(userId, limit);
             if (response != null)
             {
                 return Ok(response);
@@ -30,13 +32,13 @@ namespace FinanceApp.API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<TransactionsResponseMedia>> SaveTransaction(TransactionsRequestMedia transactionsRequestMedia)
+        public async Task<ActionResult> SaveTransaction(TransactionsRequestMedia transactionsRequestMedia)
         {
             Guid userId = new Guid(User?.Claims?.FirstOrDefault(c => c?.Type == ClaimTypes.Actor).Value?.ToString());
             var response = await _transactionService.SaveTransaction(transactionsRequestMedia, userId);
-            if (response != null)
+            if (response == true)
             {
-                return Ok(response);
+                return Ok();
             }
             return BadRequest();
         }

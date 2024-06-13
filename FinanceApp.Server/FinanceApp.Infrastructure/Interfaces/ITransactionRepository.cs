@@ -9,8 +9,8 @@ namespace FinanceApp.Infrastructure.Interfaces
 {
     public interface ITransactionRepository
     {
-        public Task<TransactionsResponseMedia> GetAllTransactions(Guid accountId);
-        public Task<TransactionsResponseMedia> SaveTransaction(TransactionsRequestMedia transactionsRequestMedia, Guid userId);
+        public Task<TransactionsResponseMedia> GetAllTransactions(Guid accountId, int limit);
+        public Task<bool> SaveTransaction(TransactionsRequestMedia transactionsRequestMedia, Guid userId);
 
     }
 }

@@ -17,13 +17,13 @@ namespace FinanceApp.Application.Services
         {
             _transactionRepository = transactionRepository;
         }
-        public async Task<TransactionsResponseMedia> GetAllTransactions(Guid accountId)
+        public async Task<TransactionsResponseMedia> GetAllTransactions(Guid accountId, int limit)
         {
-            var response = await _transactionRepository.GetAllTransactions(accountId);
+            var response = await _transactionRepository.GetAllTransactions(accountId, limit);
             return response;
         }
 
-        public async Task<TransactionsResponseMedia> SaveTransaction(TransactionsRequestMedia transactionsRequestMedia, Guid userId)
+        public async Task<bool> SaveTransaction(TransactionsRequestMedia transactionsRequestMedia, Guid userId)
         {
             var response = await _transactionRepository.SaveTransaction(transactionsRequestMedia, userId);
             return response;
