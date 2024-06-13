@@ -11,5 +11,6 @@ namespace FinanceApp.Infrastructure.Interfaces
     {
         public Task<AccountResponseMedia> GetAccounts(Guid userId);
         public Task<AccountResponseMedia> SaveAccount(AccountRequestMedia accountRequestMedia);
+        public Task<AccountMetadataMedia> GetAccountMetadata(Guid userId);
     }
 }

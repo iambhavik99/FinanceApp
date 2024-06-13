@@ -3,6 +3,7 @@ using FinanceApp.Infrastructure.Models.Accounts;
 using FinanceApp.Infrastructure.Models.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace FinanceApp.API.Controllers
 {
@@ -34,6 +35,18 @@ namespace FinanceApp.API.Controllers
         public async Task<ActionResult<AccountResponseMedia>> SaveAccount(AccountRequestMedia accountRequestMedia)
         {
             var response = await _accountService.SaveAccount(accountRequestMedia);
+            if (response != null)
+            {
+                return Ok(response);
+            }
+            return BadRequest();
+        }
+
+        [HttpGet("metadata")]
+        public async Task<ActionResult<AccountResponseMedia>> GetAccountMetadata()
+        {
+            Guid userId = new Guid(User.Claims.FirstOrDefault(x=>x.Type == ClaimTypes.Actor).Value.ToString());
+            var response = await _accountService.GetAccountMetadata(userId);
             if (response != null)
             {
                 return Ok(response);

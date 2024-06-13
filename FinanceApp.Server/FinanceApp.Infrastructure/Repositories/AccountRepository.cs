@@ -2,12 +2,15 @@
 using FinanceApp.Domain.Models;
 using FinanceApp.Infrastructure.Interfaces;
 using FinanceApp.Infrastructure.Models.Accounts;
+using FinanceApp.Infrastructure.Models.Transactions;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace FinanceApp.Infrastructure.Repositories
 {
@@ -56,6 +59,33 @@ namespace FinanceApp.Infrastructure.Repositories
             await _context.SaveChangesAsync();
 
             return await GetAccounts(accountRequestMedia.userId);
+
+        }
+
+        public async Task<AccountMetadataMedia> GetAccountMetadata(Guid userId)
+        {
+            try
+            {
+                var accounts = await _context.Accounts.Where(a => a.userId == userId).ToListAsync();
+                var transactions = await _context.Transactions.Where(t => t.userId == userId).ToListAsync();
+
+                List<AccountMetadata> accountMetadata = new List<AccountMetadata>();
+                accountMetadata = accounts.Select(x => new AccountMetadata { name = x.name, totalBalance = x.balance })
+                    .ToList();
+
+                return new AccountMetadataMedia
+                {
+                    accounts = accountMetadata,
+                    totalBalance = accounts.Sum(x => x.balance),
+                    totalExpance = transactions.Where(t => t.type == TransactionEum.DEBIT).Sum(t => t.amount),
+                    totalIncome = transactions.Where(t => t.type == TransactionEum.CREDIT).Sum(t => t.amount)
+                };
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
 
         }
     }

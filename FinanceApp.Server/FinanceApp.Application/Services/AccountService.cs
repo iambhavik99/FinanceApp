@@ -17,14 +17,19 @@ namespace FinanceApp.Application.Services
             _accountRepository = accountRepository;
         }
 
-        public Task<AccountResponseMedia> GetAccounts(Guid userId)
+        public async Task<AccountResponseMedia> GetAccounts(Guid userId)
         {
-            return _accountRepository.GetAccounts(userId);
+            return await _accountRepository.GetAccounts(userId);
         }
 
-        public Task<AccountResponseMedia> SaveAccount(AccountRequestMedia accountRequestMedia)
+        public async Task<AccountResponseMedia> SaveAccount(AccountRequestMedia accountRequestMedia)
         {
-            return _accountRepository.SaveAccount(accountRequestMedia);
+            return await _accountRepository.SaveAccount(accountRequestMedia);
+        }
+
+        public async Task<AccountMetadataMedia> GetAccountMetadata(Guid userId)
+        {
+            return await _accountRepository.GetAccountMetadata(userId);
         }
     }
 
