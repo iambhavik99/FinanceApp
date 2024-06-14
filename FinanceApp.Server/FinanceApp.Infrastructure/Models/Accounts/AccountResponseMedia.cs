@@ -15,7 +15,7 @@ namespace FinanceApp.Infrastructure.Models.Accounts
     {
         public Guid accountId { get; set; }
         public string accountName { get; set; }
-        public int balance { get; set; } = 0;
+        public decimal balance { get; set; } = 0;
 
     }
 }

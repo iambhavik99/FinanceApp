@@ -2,6 +2,7 @@
 using FinanceApp.Domain.Models;
 using FinanceApp.Infrastructure.Interfaces;
 using FinanceApp.Infrastructure.Models.Accounts;
+using FinanceApp.Infrastructure.Models.Categories;
 using FinanceApp.Infrastructure.Models.Transactions;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -17,9 +18,11 @@ namespace FinanceApp.Infrastructure.Repositories
     public class AccountRepository : IAccountRepository
     {
         private readonly ApplicationDBContext _context;
-        public AccountRepository(ApplicationDBContext context)
+        private readonly ITransactionRepository _transactionRepository;
+        public AccountRepository(ApplicationDBContext context, ITransactionRepository transactionRepository)
         {
             _context = context;
+            _transactionRepository = transactionRepository;
         }
 
         public async Task<AccountResponseMedia> GetAccounts(Guid userId)
@@ -55,8 +58,19 @@ namespace FinanceApp.Infrastructure.Repositories
             account.createdAt = DateTime.UtcNow;
             account.updatedAt = DateTime.UtcNow;
 
+            var category = await _context.Categories.FirstOrDefaultAsync(x => x.name == "BALANCE");
+
+            TransactionsRequestMedia transactionsRequestMedia = new TransactionsRequestMedia();
+            transactionsRequestMedia.accountId = account.id;
+            transactionsRequestMedia.amount = account.balance;
+            transactionsRequestMedia.note = "INITIAL BALANCE";
+            transactionsRequestMedia.categoryId = category.id;
+            transactionsRequestMedia.transactionType = TransactionType.CREDIT;
+
             await _context.Accounts.AddAsync(account);
             await _context.SaveChangesAsync();
+
+            await _transactionRepository.SaveTransaction(transactionsRequestMedia, accountRequestMedia.userId);
 
             return await GetAccounts(accountRequestMedia.userId);
 

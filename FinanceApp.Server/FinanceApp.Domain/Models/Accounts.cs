@@ -13,15 +13,19 @@ namespace FinanceApp.Domain.Models
         [Key]
         public Guid id { get; set; }
         [Required]
-        public Guid userId { get; set; }
         [ForeignKey("userId")]
-        public Users User { get; set; }
+        public Guid userId { get; set; }
         [Required]
         public string name { get; set; }
         [Required]
-        public int balance { get; set; } = 0;
+        public decimal balance { get; set; } = 0;
         public DateTime createdAt { get; set; } = DateTime.UtcNow;
         public DateTime updatedAt { get; set; } = DateTime.UtcNow;
+        
         public ICollection<Transactions> Transactions { get; set; }
+        public ICollection<AccountHistory> AccountHistory { get; set; }
+
+
+        public Users User { get; set; }
     }
 }

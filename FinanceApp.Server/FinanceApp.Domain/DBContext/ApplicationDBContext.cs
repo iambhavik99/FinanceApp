@@ -19,6 +19,7 @@ namespace FinanceApp.Domain.DBContext
         public DbSet<Accounts> Accounts { get; set; }
         public DbSet<Transactions> Transactions { get; set; }
         public DbSet<Categories> Categories { get; set; }
+        public DbSet<AccountHistory> AccountHistories { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -75,6 +76,35 @@ namespace FinanceApp.Domain.DBContext
 
                 entity.HasOne(e => e.Category)
                     .WithMany(a => a.Transaction)
+                    .HasForeignKey(e => e.categoryId)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+            });
+
+            modelBuilder.Entity<AccountHistory>(entity =>
+            {
+                entity.HasKey(e => e.id);
+                entity.Property(e => e.amount).HasColumnType("decimal(15, 2)").IsRequired();
+                entity.Property(e => e.balance).HasColumnType("decimal(15, 2)").IsRequired();
+                entity.Property(e => e.createdAt).IsRequired();
+
+                entity.HasOne(e => e.Users)
+                    .WithMany(u => u.AccountHistory)
+                    .HasForeignKey(e => e.userId)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasOne(e => e.Account)
+                    .WithMany(a => a.AccountHistory)
+                    .HasForeignKey(e => e.accountId)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasOne(e => e.Transaction)
+                    .WithMany(a => a.AccountHistory)
+                    .HasForeignKey(e => e.transactionId)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasOne(e => e.Category)
+                    .WithMany(a => a.AccountHistory)
                     .HasForeignKey(e => e.categoryId)
                     .OnDelete(DeleteBehavior.Cascade);
 

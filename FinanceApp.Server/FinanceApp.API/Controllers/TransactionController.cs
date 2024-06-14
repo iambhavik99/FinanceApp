@@ -14,9 +14,11 @@ namespace FinanceApp.API.Controllers
     public class TransactionController : Controller
     {
         private readonly ITransactionService _transactionService;
-        public TransactionController(ITransactionService transactionService)
+        private readonly IAccountHistoryRepository _accountHistoryRepository;
+        public TransactionController(ITransactionService transactionService, IAccountHistoryRepository accountHistoryRepository)
         {
             _transactionService = transactionService;
+            _accountHistoryRepository = accountHistoryRepository;
         }
 
         [HttpGet]
@@ -39,6 +41,18 @@ namespace FinanceApp.API.Controllers
             if (response == true)
             {
                 return Ok();
+            }
+            return BadRequest();
+        }
+
+        [HttpGet("history")]
+        public async Task<ActionResult> GetTransactionHistory()
+        {
+            Guid userId = new Guid(User?.Claims?.FirstOrDefault(c => c?.Type == ClaimTypes.Actor).Value?.ToString());
+            var response = await _accountHistoryRepository.GetTransactionHistory(userId);
+            if (response != null)
+            {
+                return Ok(response);
             }
             return BadRequest();
         }

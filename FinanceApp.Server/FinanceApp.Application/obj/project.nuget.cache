@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "0fEmK0FdXBs=",
+  "dgSpecHash": "Xa2HV+WpdX0=",
   "success": true,
   "projectFilePath": "D:\\Self learning\\Projects\\FinanceApp\\FinanceApp.Server\\FinanceApp.Application\\FinanceApp.Application.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Bhavik\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
     "C:\\Users\\Bhavik\\.nuget\\packages\\microsoft.entityframeworkcore\\6.0.31\\microsoft.entityframeworkcore.6.0.31.nupkg.sha512",
     "C:\\Users\\Bhavik\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\6.0.31\\microsoft.entityframeworkcore.abstractions.6.0.31.nupkg.sha512",
     "C:\\Users\\Bhavik\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\6.0.31\\microsoft.entityframeworkcore.analyzers.6.0.31.nupkg.sha512",

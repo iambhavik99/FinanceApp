@@ -16,5 +16,6 @@ namespace FinanceApp.Domain.Models
         [MaxLength(100)]
         public string name { get; set; }
         public ICollection<Transactions> Transaction { get; set; }
+        public ICollection<AccountHistory> AccountHistory { get; set; }
     }
 }

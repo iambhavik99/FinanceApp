@@ -1,12 +1,69 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "D:\\Self learning\\FinanceApp\\FinanceApp.server\\FinanceApp.Core\\",
-  "Documents": [],
+  "WorkspaceRootPath": "D:\\Self learning\\Projects\\FinanceApp\\FinanceApp.Server\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{3E75ACE3-EBF0-4D15-B2FD-2B2C7E42103B}|FinanceApp.Infrastructure\\FinanceApp.Infrastructure.csproj|d:\\self learning\\projects\\financeapp\\financeapp.server\\financeapp.infrastructure\\repositories\\transactionrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3E75ACE3-EBF0-4D15-B2FD-2B2C7E42103B}|FinanceApp.Infrastructure\\FinanceApp.Infrastructure.csproj|solutionrelative:financeapp.infrastructure\\repositories\\transactionrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3E75ACE3-EBF0-4D15-B2FD-2B2C7E42103B}|FinanceApp.Infrastructure\\FinanceApp.Infrastructure.csproj|d:\\self learning\\projects\\financeapp\\financeapp.server\\financeapp.infrastructure\\models\\transactions\\transactionsresponsemedia.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3E75ACE3-EBF0-4D15-B2FD-2B2C7E42103B}|FinanceApp.Infrastructure\\FinanceApp.Infrastructure.csproj|solutionrelative:financeapp.infrastructure\\models\\transactions\\transactionsresponsemedia.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3E75ACE3-EBF0-4D15-B2FD-2B2C7E42103B}|FinanceApp.Infrastructure\\FinanceApp.Infrastructure.csproj|d:\\self learning\\projects\\financeapp\\financeapp.server\\financeapp.infrastructure\\repositories\\accountrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3E75ACE3-EBF0-4D15-B2FD-2B2C7E42103B}|FinanceApp.Infrastructure\\FinanceApp.Infrastructure.csproj|solutionrelative:financeapp.infrastructure\\repositories\\accountrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": []
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "TransactionsResponseMedia.cs",
+              "DocumentMoniker": "D:\\Self learning\\Projects\\FinanceApp\\FinanceApp.Server\\FinanceApp.Infrastructure\\Models\\Transactions\\TransactionsResponseMedia.cs",
+              "RelativeDocumentMoniker": "FinanceApp.Infrastructure\\Models\\Transactions\\TransactionsResponseMedia.cs",
+              "ToolTip": "D:\\Self learning\\Projects\\FinanceApp\\FinanceApp.Server\\FinanceApp.Infrastructure\\Models\\Transactions\\TransactionsResponseMedia.cs",
+              "RelativeToolTip": "FinanceApp.Infrastructure\\Models\\Transactions\\TransactionsResponseMedia.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAAWAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-14T10:56:33.856Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "TransactionRepository.cs",
+              "DocumentMoniker": "D:\\Self learning\\Projects\\FinanceApp\\FinanceApp.Server\\FinanceApp.Infrastructure\\Repositories\\TransactionRepository.cs",
+              "RelativeDocumentMoniker": "FinanceApp.Infrastructure\\Repositories\\TransactionRepository.cs",
+              "ToolTip": "D:\\Self learning\\Projects\\FinanceApp\\FinanceApp.Server\\FinanceApp.Infrastructure\\Repositories\\TransactionRepository.cs",
+              "RelativeToolTip": "FinanceApp.Infrastructure\\Repositories\\TransactionRepository.cs",
+              "ViewState": "AQIAAFMAAAAAAAAAAAAlwGoAAAANAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-14T10:52:41.628Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "AccountRepository.cs",
+              "DocumentMoniker": "D:\\Self learning\\Projects\\FinanceApp\\FinanceApp.Server\\FinanceApp.Infrastructure\\Repositories\\AccountRepository.cs",
+              "RelativeDocumentMoniker": "FinanceApp.Infrastructure\\Repositories\\AccountRepository.cs",
+              "ToolTip": "D:\\Self learning\\Projects\\FinanceApp\\FinanceApp.Server\\FinanceApp.Infrastructure\\Repositories\\AccountRepository.cs",
+              "RelativeToolTip": "FinanceApp.Infrastructure\\Repositories\\AccountRepository.cs",
+              "ViewState": "AQIAADAAAAAAAAAAAAAAwEEAAAA8AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-14T10:51:40.775Z"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

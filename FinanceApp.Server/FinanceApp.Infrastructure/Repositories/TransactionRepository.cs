@@ -9,7 +9,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace FinanceApp.Infrastructure.Repositories
 {
@@ -85,7 +84,19 @@ namespace FinanceApp.Infrastructure.Repositories
 
                 account.updatedAt = DateTime.UtcNow;
 
+                AccountHistory accountHistory = new AccountHistory();
+                accountHistory.id = Guid.NewGuid();
+                accountHistory.accountId = account.id;
+                accountHistory.transactionId = transactions.id;
+                accountHistory.categoryId = transactions.categoryId;
+                accountHistory.userId = transactions.userId;
+                accountHistory.amount = transactions.amount;
+                accountHistory.balance = account.balance;
+                accountHistory.createdAt = transactions.createdAt;
+
                 await _context.Transactions.AddAsync(transactions);
+                await _context.AccountHistories.AddAsync(accountHistory);
+
                 await _context.SaveChangesAsync();
 
                 return true;
@@ -96,19 +107,23 @@ namespace FinanceApp.Infrastructure.Repositories
             }
         }
 
-
         public string getDescription(TransactionsRequestMedia transactionsRequestMedia, Guid transactionId)
         {
-            string accountId = transactionsRequestMedia.accountId.ToString().Substring(0, 4);
-            string _transactionId = transactionId.ToString().Substring(0, 4);
             string note = transactionsRequestMedia.note.ToUpper();
-
-            if (note.Length > 4)
+            if (note == "INITIAL BALANCE")
             {
-                note = note.Substring(0, 4);
+                return note;
             }
 
-            return $"{_transactionId}-{accountId}-{note}";
+            string accountId = transactionsRequestMedia.accountId.ToString().Substring(0, 8);
+            string _transactionId = transactionId.ToString().Substring(0, 8);
+
+            if (note.Length > 12)
+            {
+                note = note.Substring(0, 12);
+            }
+
+            return $"{transactionsRequestMedia.transactionType}/{_transactionId}/{accountId}/{note}";
         }
     }
 }
