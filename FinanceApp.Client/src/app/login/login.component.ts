@@ -71,18 +71,18 @@ export class LoginComponent implements OnInit {
 
       if (this.state === 'LOGIN') {
         requestMedia = { username, password: encryptedPassword } as UserLoginRequestMedia;
-        endpointURL = 'api/users/login';
+        endpointURL = '/api/users/login';
       }
       else {
         requestMedia = { username, email, password: encryptedPassword } as UserRequestMedia;
-        endpointURL = 'api/users/signup';
+        endpointURL = '/api/users/signup';
       }
 
       const response = await lastValueFrom(this.apiService.post(endpointURL, requestMedia));
 
       if (this.state === 'LOGIN') {
-        localStorage.setItem('userId', response.id)
-        this.router.navigate(['/home']);
+        localStorage.setItem('userInfoMedia', JSON.stringify(response))
+        this.router.navigate(['/']);
       }
       else {
         this.loginForm.reset();

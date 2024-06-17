@@ -1,20 +1,32 @@
 import { Injectable } from '@angular/core';
+import { UserInfoMedia } from 'src/app/common/models/users/user-info.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GlobalService {
 
-  private userId!: string;
+  private userInfoMedia!: UserInfoMedia
 
   constructor() { }
 
-  getLoggedInUserId() {
-    return this.userId;
+  getUserInfoMedia(): UserInfoMedia {
+
+    if (!this.userInfoMedia?.email?.trim()) {
+      let _userInfoMedia: any = JSON.parse(localStorage.getItem('userInfoMedia') ?? '');
+
+      if (!!_userInfoMedia?.email?.trim()) {
+        this.userInfoMedia = _userInfoMedia;
+      }
+
+    }
+
+    return this.userInfoMedia;
   }
 
-  setLoggedInUserId(userId: string) {
-    this.userId = userId;
+  setUserInfoMedia(userInfoMedia: UserInfoMedia) {
+    localStorage.setItem('userInfoMedia', JSON.stringify(userInfoMedia))
+    this.userInfoMedia = userInfoMedia;
   }
 
 

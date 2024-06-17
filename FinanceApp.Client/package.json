@@ -21,6 +21,7 @@
     "@angular/platform-browser-dynamic": "^16.2.0",
     "@angular/router": "^16.2.0",
     "bcryptjs": "^2.4.3",
+    "echarts": "^5.5.0",
     "js-base64": "^3.7.7",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",

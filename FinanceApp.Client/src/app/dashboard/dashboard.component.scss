@@ -14,3 +14,47 @@ tr.mat-mdc-footer-row {
   letter-spacing: 0.44px;
   background: #f0fdfa !important;
 }
+
+.mdc-button.btn-expanse {
+  background-color: white !important;
+  color: #dc2626 !important;
+  min-width: 100px;
+  border: 1px solid #dc2626;
+}
+
+.mdc-button.btn-account {
+  background-color: white !important;
+  color: #0891b2 !important;
+  min-width: 100px;
+  border: 1px solid #0891b2;
+}
+
+.mdc-button.btn-income {
+  background-color: white !important;
+  color: #0d9488 !important;
+  min-width: 100px;
+  border: 1px solid #0d9488;
+}
+
+.mdc-button.btn-income:hover {
+  color: white !important;
+  background-color: #0d9488 !important;
+}
+.mdc-button.btn-expanse:hover {
+  color: white !important;
+  background-color: #dc2626 !important;
+}
+.mdc-button.btn-account:hover {
+  color: white !important;
+  background-color: #0891b2 !important;
+}
+
+.mat-mdc-cell {
+  border: none !important;
+}
+
+#fn-status-icon {
+  font-size: 32px;
+  width: 32px;
+  height: 32px;
+}

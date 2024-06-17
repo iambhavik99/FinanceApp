@@ -5,13 +5,15 @@ import { MasterComponent } from './master/master.component';
 import { authGuard } from './guard/auth.guard';
 
 const routes: Routes = [
-  { path: 'login', component: LoginComponent },
   {
-    path: 'home',
+    path: 'login',
+    component: LoginComponent
+  },
+  {
+    path: '',
     loadChildren: () => import('./master/master.module').then(m => m.MasterModule),
     canActivate: [authGuard]
-  },
-  { path: '', redirectTo: '/login', pathMatch: 'full' }
+  }
 ];
 
 @NgModule({

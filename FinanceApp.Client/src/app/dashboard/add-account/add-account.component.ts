@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { lastValueFrom } from 'rxjs';
 import { AccountRequestMedia } from 'src/app/common/models/accounts/accounts.model';
-import { ApiService } from 'src/app/services/api/api.service';
+import { AccountsService } from 'src/app/services/accounts/accounts.service';
 import { GlobalService } from 'src/app/services/common/global.service';
 
 @Component({
@@ -15,7 +15,7 @@ export class AddAccountComponent implements OnInit {
 
   accountForm!: FormGroup;
 
-  constructor(private apiService: ApiService,
+  constructor(private accountsService: AccountsService,
     private readonly globalService: GlobalService,
     public dialogRef: MatDialogRef<AddAccountComponent>
   ) { }
@@ -38,10 +38,10 @@ export class AddAccountComponent implements OnInit {
       accountRequestMedia = {
         accountName: this.accountForm.get("accountName")?.value,
         balance: this.accountForm.get("balance")?.value,
-        userId: this.globalService.getLoggedInUserId()
+        userId: this.globalService.getUserInfoMedia().id!
       }
 
-      await lastValueFrom(this.apiService.post('api/accounts', accountRequestMedia));
+      await this.accountsService.saveAccount(accountRequestMedia);
 
       this.dialogRef.close(true);
 

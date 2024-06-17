@@ -1,100 +1,178 @@
-<div class="p-4">
-  <div class="w-full flex pb-5">
+<div class="w-full flex p-2" style="height: 100%">
+  <div
+    class="w-2/5 m-2 bg-white"
+    id="chart-section"
+    style="display: flex; flex-direction: column"
+  >
+    <div class="p-2 px-4 block">
+      <div class="text-teal-600 font-semibold text-md">Account overview</div>
+    </div>
     <div
-      class="w-1/4 bg-white shadow-md rounded-lg overflow-hidden border border-lg mx-2"
-    >
-      <div
-        class="flex items-center p-3 border-b text-teal-600 font-semibold text-lg"
-      >
-        <div>Account(s)</div>
-        <div class="flex ml-1">
-          <button mat-icon-button (click)="addAccount()">
-            <mat-icon>add_circle_outline</mat-icon>
-          </button>
-        </div>
+      class="w-full flex-1 rounded-md shadow-md min-h-48"
+      style="flex-grow: 1"
+      id="chart-view"
+    ></div>
+  </div>
+  <div
+    class="w-3/5 mr-3"
+    id="metadata-section"
+    style="display: flex; flex-direction: column"
+  >
+    <div class="w-full flex rounded-md shadow-md p-2 bg-white m-2">
+      <div class="w-1/3 flex justify-center items-center m-2">
+        <button
+          mat-flat-button
+          class="h-full w-full btn-account"
+          (click)="addAccount()"
+        >
+          <mat-icon>add</mat-icon>Add acount
+        </button>
       </div>
-      <div class="px-3 py-2">
-        <div *ngFor="let items of accountResponseMedia?.items">
-          <div class="text-gray-400 font-semibold text-sm">
-            {{ items.accountName }}
-          </div>
-          <span class="text-teal-600 font-bold">{{ items.balance }}</span>
-        </div>
-        <div class="pt-2">
-          <div class="text-gray-400 font-semibold text-md">Total balance</div>
-          <span class="text-teal-600 font-bold text-md">{{
-            getTotalBalance()
-          }}</span>
-        </div>
+
+      <div class="w-1/3 flex justify-center items-center m-2">
+        <button
+          mat-flat-button
+          class="h-full w-full btn-expanse"
+          (click)="onTransaction('DEBIT')"
+        >
+          <mat-icon>north</mat-icon>Add expanses
+        </button>
+      </div>
+
+      <div class="w-1/3 flex justify-center items-center m-2">
+        <button
+          mat-flat-button
+          class="h-full w-full btn-income"
+          (click)="onTransaction('CREDIT')"
+        >
+          <mat-icon>south</mat-icon>Add income
+        </button>
       </div>
     </div>
 
-    <div
-      class="w-3/4 bg-white shadow-md rounded-lg overflow-hidden border border-lg mx-2"
-    >
-      <!-- <div class="p-3 border-b text-teal-600 font-semibold text-lg">Transaction</div> -->
-      <div class="px-3 py-2">
-        <mat-tab-group mat-align-tabs="start" mat-stretch-tabs="false">
-          <mat-tab label="Expanse">
-            <app-transaction
-              [transactionType]="'DEBIT'"
-              [accounts]="accountResponseMedia"
-              (onTransaction)="getAccountsList()"
-            ></app-transaction>
-          </mat-tab>
-          <mat-tab label="Income">
-            <app-transaction
-              [transactionType]="'CREDIT'"
-              [accounts]="accountResponseMedia"
-              (onTransaction)="getAccountsList()"
-            ></app-transaction>
-          </mat-tab>
-        </mat-tab-group>
+    <div class="w-full flex flex-1">
+      <div class="w-1/3 m-2 flex flex-col">
+        <div
+          class="w-full flex-1 rounded-md shadow-md p-4 bg-white flex flex-col justify-between"
+        >
+          <div class="w-full flex justify-start">
+            <div>
+              <mat-icon id="fn-status-icon" class="text-cyan-600"
+                >account_balance</mat-icon
+              >
+              <div class="text-cyan-600 font-semibold text-md">
+                Total balance
+              </div>
+            </div>
+          </div>
+          <div class="w-full">
+            <div class="text-gray-600 font-bold text-lg">
+              {{ accountMetadataMedia.totalBalance | currency : "INR" }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="w-1/3 m-2 flex flex-col">
+        <div
+          class="w-full flex-1 rounded-md shadow-md p-4 bg-white flex flex-col justify-between"
+        >
+          <div class="w-full flex justify-start">
+            <div>
+              <mat-icon id="fn-status-icon" class="text-teal-600"
+                >north</mat-icon
+              >
+              <div class="text-teal-600 font-semibold text-md">Income</div>
+            </div>
+          </div>
+          <div>
+            <div class="text-gray-600 font-bold text-lg">
+              {{ accountMetadataMedia.totalIncome | currency : "INR" }}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="w-1/3 m-2 flex flex-col">
+        <div
+          class="w-full flex-1 rounded-md shadow-md p-4 bg-white flex flex-col justify-between"
+        >
+          <div class="w-full flex justify-start">
+            <div>
+              <mat-icon id="fn-status-icon" class="text-red-600 stroke-2"
+                >south</mat-icon
+              >
+              <div class="text-red-600 font-semibold text-md">Expanse</div>
+            </div>
+          </div>
+          <div>
+            <div class="text-gray-600 font-bold text-lg">
+              {{ accountMetadataMedia.totalExpance | currency : "INR" }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="w-full flex p-2">
+  <div
+    class="w-3/5 bg-white shadow-md rounded-lg overflow-hidden mx-2"
+    style="display: flex; flex-direction: column"
+  >
+    <div class="p-2 px-4 block">
+      <div class="text-teal-600 font-semibold text-md">Recent transactions</div>
+    </div>
+    <div class="px-0">
+      <div class="mb-2">
+        <table mat-table [dataSource]="dataSource">
+          <ng-container matColumnDef="description">
+            <td mat-cell *matCellDef="let element">
+              <div class="p-1">
+                <div class="text-sm mb-1">{{ element.description }}</div>
+                <div class="text-xs font-light">
+                  {{ element.timestamp | timeDiff }}
+                </div>
+              </div>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="amount">
+            <td
+              mat-cell
+              *matCellDef="let element"
+              class="text-sm font-medium tracking-widest"
+            >
+              <div
+                class="flex items-center"
+                [ngClass]="[
+                  element.type == 'DEBIT' ? 'text-red-600' : 'text-teal-700'
+                ]"
+              >
+                {{ element.type == "DEBIT" ? "-" : "+" }}
+                {{ element.amount | currency : "INR" }}
+              </div>
+            </td>
+          </ng-container>
+
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
       </div>
     </div>
   </div>
 
-  <div class="w-full flex pb-5">
-    <div
-      class="w-full bg-white shadow-md rounded-lg overflow-hidden border border-lg mx-2"
-    >
-      <div class="p-3 block border-b text-teal-600 font-semibold text-lg">
-        Recent Transactions
-      </div>
-      <div class="py-2 px-3">
-        <div class="border my-3">
-          <table mat-table [dataSource]="dataSource">
-            <ng-container matColumnDef="description">
-              <th mat-header-cell *matHeaderCellDef>Transaction description</th>
-              <td mat-cell *matCellDef="let element">
-                {{ element.description }}
-              </td>
-            </ng-container>
-
-            <ng-container matColumnDef="amount">
-              <th mat-header-cell *matHeaderCellDef>Amount</th>
-              <td mat-cell *matCellDef="let element">
-                <div
-                  class="flex items-center"
-                  [ngClass]="[
-                    element.transactionType == 'DEBIT'
-                      ? 'text-red-600'
-                      : 'text-teal-700'
-                  ]"
-                >
-                  {{ element.transactionType == "DEBIT" ? "-" : "+" }}
-                  {{ element.amount | currency : "INR" }}
-                </div>
-              </td>
-            </ng-container>
-            <tr
-              mat-header-row
-              *matHeaderRowDef="displayedColumns; sticky: true"
-            ></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-          </table>
-        </div>
-      </div>
+  <div
+    class="w-2/5 mx-2 bg-white"
+    id="chart-section"
+    style="display: flex; flex-direction: column"
+  >
+    <div class="p-2 px-4 block">
+      <div class="text-teal-600 font-semibold text-md">Expanses</div>
     </div>
+    <div
+      class="w-full flex-1 rounded-md shadow-md min-h-56"
+      style="flex-grow: 1"
+      id="pie-chart-view"
+    ></div>
   </div>
 </div>

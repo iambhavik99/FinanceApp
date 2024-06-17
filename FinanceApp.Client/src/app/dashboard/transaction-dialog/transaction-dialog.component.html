@@ -1,0 +1,85 @@
+<div mat-dialog-title class="flex items-center">
+  <span class="text-teal-600 font-semibold text-md"> Add account </span>
+</div>
+<mat-dialog-content>
+  <form [formGroup]="transactionForm" (submit)="saveTransaction()" class="py-2">
+    <div class="w-full">
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Account</mat-label>
+        <mat-select name="accountId" formControlName="accountId" required>
+          <mat-option
+            [value]="account.accountId"
+            *ngFor="let account of accountResponseMedia?.items"
+          >
+            {{ account.accountName }}
+          </mat-option>
+          <mat-option *ngIf="accountResponseMedia?.items?.length == 0">
+            No account found
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="w-full">
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Category</mat-label>
+        <mat-select name="categoryId" formControlName="categoryId" required>
+          <mat-option
+            [value]="category.id"
+            *ngFor="let category of categoriesResponseMedia?.items"
+          >
+            {{ category.name }}
+          </mat-option>
+          <mat-option *ngIf="categoriesResponseMedia?.items?.length == 0">
+            No category found
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="w-full">
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Amount</mat-label>
+        <input
+          matInput
+          type="number"
+          name="amount"
+          formControlName="amount"
+          required
+        />
+      </mat-form-field>
+    </div>
+
+    <div class="w-full">
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Note</mat-label>
+        <textarea
+          matInput
+          name="note"
+          formControlName="note"
+          placeholder="Ex. Buying food..."
+          required
+        >
+        </textarea>
+      </mat-form-field>
+    </div>
+
+    <div class="w-2/5 mr-2 flex">
+      <button
+        mat-flat-button
+        class="btn-primary w-full mx-2"
+        type="submit"
+        [disabled]="transactionForm.invalid"
+      >
+        SAVE
+      </button>
+      <button
+        mat-flat-button
+        class="btn-secondary w-full"
+        mat-dialog-close="false"
+      >
+        CANCEL
+      </button>
+    </div>
+  </form>
+</mat-dialog-content>

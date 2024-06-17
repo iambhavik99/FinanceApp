@@ -57,6 +57,10 @@ body {
   font-family: "Archivo", "Helvetica Neue", sans-serif;
 }
 
+.mat-mdc-row {
+  font-family: "Archivo", "Helvetica Neue", sans-serif !important;
+}
+
 .mat-mdc-form-field.mat-mdc-form-field.mat-mdc-form-field.mat-mdc-form-field.mat-mdc-form-field
   .mdc-notched-outline__notch {
   border-right-style: hidden;
@@ -92,4 +96,13 @@ body {
 .mdc-button.btn-primary[disabled] {
   background-color: lightgray !important;
   cursor: not-allowed !important;
+}
+
+mat-error {
+  font-size: 12px !important;
+}
+
+.mat-mdc-form-field-hint-wrapper,
+.mat-mdc-form-field-error-wrapper {
+  padding-left: 4px !important;
 }

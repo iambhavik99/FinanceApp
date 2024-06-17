@@ -2,43 +2,52 @@
   <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-sm">
     <h2 class="text-2xl font-bold mb-6 text-center">{{ state | titlecase }}</h2>
     <form [formGroup]="loginForm" (submit)="onSubmit()">
-      <div class="mb-4">
-        <label class="block text-sm font-medium text-gray-700">Username</label>
-        <input
-          class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-teal-500 focus:border-teal-500 focus:z-10 sm:text-sm"
-          id="username"
-          autocomplete="username"
-          type="text"
-          placeholder="Enter your username"
-          formControlName="username"
-        />
+      <div class="w-full">
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label for="username">Username</mat-label>
+          <input
+            matInput
+            id="username"
+            autocomplete="username"
+            type="text"
+            placeholder="Enter your username"
+            formControlName="username"
+            required
+          />
+          <mat-error>Username is required</mat-error>
+        </mat-form-field>
       </div>
-      <div class="mb-4" *ngIf="state == 'SIGNUP'">
-        <label class="block text-sm font-medium text-gray-700" for="email"
-          >Email address</label
-        >
-        <input
-          class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-teal-500 focus:border-teal-500 focus:z-10 sm:text-sm"
-          placeholder="Enter your email address"
-          id="email"
-          type="email"
-          autocomplete="email"
-          formControlName="email"
-          required
-        />
+
+      <div class="w-full" *ngIf="state == 'SIGNUP'">
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label for="email">Email address</mat-label>
+          <input
+            matInput
+            id="email"
+            type="email"
+            autocomplete="email"
+            formControlName="email"
+            required
+          />
+          <mat-error>Email address is required</mat-error>
+        </mat-form-field>
       </div>
-      <div class="mb-6">
-        <label class="block text-sm font-medium text-gray-700" for="password"
-          >Password</label
-        >
-        <input
-          class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-teal-500 focus:border-teal-500 focus:z-10 sm:text-sm"
-          id="password"
-          type="password"
-          placeholder="Enter your password"
-          formControlName="password"
-        />
+
+      <div class="w-full">
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label for="password">Password</mat-label>
+          <input
+            matInput
+            id="password"
+            type="password"
+            placeholder="Enter your password"
+            formControlName="password"
+            required
+          />
+          <mat-error>Password is required</mat-error>
+        </mat-form-field>
       </div>
+
       <div class="flex items-center justify-between">
         <button
           class="text-white w-full"
@@ -53,7 +62,7 @@
     </form>
 
     <div
-      class="flex items-center justify-center text-teal-500 hover:underline pt-3"
+      class="flex items-center justify-center text-teal-500 hover:underline hover:cursor-pointer pt-3"
       (click)="onChangeStatus()"
     >
       {{ state === "LOGIN" ? "Create new account?" : "Existing user" }}

@@ -9,13 +9,8 @@ const routes: Routes = [
     component: MasterComponent,
     children: [
       {
-        path: "",
-        redirectTo: "dashboard",
-        pathMatch: 'full'
-      },
-      {
         path: "dashboard",
-        component: DashboardComponent
+        loadChildren: () => import('../dashboard/dashboard.module').then(m => m.DashboardModule)
       }
     ]
   }

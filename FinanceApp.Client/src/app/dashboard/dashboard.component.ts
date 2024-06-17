@@ -2,13 +2,16 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { ApiService } from '../services/api/api.service';
 import { GlobalService } from '../services/common/global.service';
-import { AccountResponseMedia } from '../common/models/accounts/accounts.model';
-import { lastValueFrom } from 'rxjs';
-import { Transaction, TransactionResponseMedia } from '../common/models/transactions/transactions.model';
+import { TransactionResponseMedia } from '../common/models/transactions/transactions.model';
 import { MatDialog } from '@angular/material/dialog';
 import { AddAccountComponent } from './add-account/add-account.component';
+import { AccountsService } from '../services/accounts/accounts.service';
+import { TransactionsService } from '../services/transactions/transactions.service';
+import { AccountMetadataMedia } from '../common/models/accounts/accounts-metadata.model';
+import { TransactionDialogComponent } from './transaction-dialog/transaction-dialog.component';
+import { setLineChart, setPieChart } from './charts-option';
+import { AccountTransactionHistoryResponseMedia, AccountTransactionMedia } from '../common/models/accounts/accounts-history.model';
 
 @Component({
   selector: 'app-dashboard',
@@ -17,47 +20,42 @@ import { AddAccountComponent } from './add-account/add-account.component';
 })
 export class DashboardComponent implements OnInit {
 
-  private userId = this.globalService.getLoggedInUserId();
+  private userId = this.globalService.getUserInfoMedia().id;
 
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   displayedColumns: string[] = ['description', 'amount'];
-  dataSource = new MatTableDataSource<Transaction>();
+  dataSource = new MatTableDataSource<AccountTransactionMedia>();
 
-  accountResponseMedia!: AccountResponseMedia;
-  transactionResponseMedia!: TransactionResponseMedia;
+  accountMetadataMedia!: AccountMetadataMedia;
+  accountTransactionHistoryResponseMedia!: AccountTransactionHistoryResponseMedia;
 
 
-  constructor(private apiService: ApiService,
+  constructor(
     private globalService: GlobalService,
-    private matDialog: MatDialog
+    private matDialog: MatDialog,
+    private accountsService: AccountsService,
+    private transactionsService: TransactionsService
   ) {
-    this.transactionResponseMedia = new TransactionResponseMedia();
+    this.accountTransactionHistoryResponseMedia = new AccountTransactionHistoryResponseMedia();
+    this.accountMetadataMedia = new AccountMetadataMedia();
   }
 
   ngOnInit() {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
 
-    this.getAccountsList();
-  }
+    this.getDashboardDetails();
 
-  getTotalBalance() {
-    return this.accountResponseMedia?.items
-      ?.map(item => item.balance)
-      ?.reduce((prev, current) => prev + current, 0);
   }
-
 
   addAccount() {
     this.matDialog
       .open(
         AddAccountComponent,
         {
-          data: {
-            userId: this.userId
-          },
+          data: { userId: this.userId },
           width: '400px',
           autoFocus: false,
           disableClose: true
@@ -66,39 +64,51 @@ export class DashboardComponent implements OnInit {
       .afterClosed()
       .subscribe(async result => {
         if (result == true) {
-          this.getAccountsList();
+          this.getDashboardDetails();
         }
-      })
+      });
+  }
+
+  onTransaction(type: string) {
+    this.matDialog
+      .open(
+        TransactionDialogComponent,
+        {
+          data: { type: type },
+          width: '400px',
+          autoFocus: false,
+          disableClose: true
+        }
+      )
+      .afterClosed()
+      .subscribe(async result => {
+        if (result == true) {
+          this.getDashboardDetails();
+        }
+      });
   }
 
 
-  async getAccountsList() {
+  async getDashboardDetails() {
     try {
+      const [accountMetadataMedia, accountTransactionHistoryResponseMedia] = await Promise.all([
+        this.accountsService.getAccountMetadata(),
+        this.accountsService.getAccountTransactionHistory()
+      ]);
 
-      const response = await lastValueFrom(this.apiService.get(`api/accounts?userId=${this.userId}`));
-      this.accountResponseMedia = response;
+      this.accountMetadataMedia = accountMetadataMedia;
+      this.accountTransactionHistoryResponseMedia = accountTransactionHistoryResponseMedia;
 
-      if (this.accountResponseMedia?.items?.length == 0) {
-        return;
+      if (this.accountTransactionHistoryResponseMedia?.items?.length) {
+        this.dataSource.data = this.accountTransactionHistoryResponseMedia.items;
       }
 
-      this.transactionResponseMedia.items = [];
+      const dateTimeStampList = accountTransactionHistoryResponseMedia.records.map(x => new Date(x.timestamp * 1000));
+      const balanceList = accountTransactionHistoryResponseMedia.records.map(x => x.balance);
+      const expanses = accountMetadataMedia.expanses.map(x => { return { name: x.categoryName, value: x.amount } });
 
-      const accountIds = this.accountResponseMedia.items.map(x => x.accountId);
-      const allTransactions = await Promise.all([
-        ...accountIds.map(x => lastValueFrom(this.apiService.get(`api/transactions?userId=${x}`)))
-      ])
-
-      allTransactions.forEach(transactions => {
-        for (let transaction of transactions.items) {
-          this.transactionResponseMedia.items
-            .push({ ...transaction })
-        }
-      })
-
-      if (this.transactionResponseMedia?.items?.length) {
-        this.dataSource.data = this.transactionResponseMedia.items;
-      }
+      setLineChart("chart-view", dateTimeStampList, balanceList);
+      setPieChart("pie-chart-view", expanses);
 
     }
     catch (ex: any) {
