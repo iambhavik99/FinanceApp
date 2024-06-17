@@ -80,21 +80,53 @@ namespace FinanceApp.Infrastructure.Repositories
         {
             try
             {
-                var accounts = await _context.Accounts.Where(a => a.userId == userId).ToListAsync();
-                var transactions = await _context.Transactions.Where(t => t.userId == userId).ToListAsync();
+                var accounts = await _context.Accounts
+                    .Where(a => a.userId == userId)
+                    .Select(a => new AccountMetadata
+                    {
+                        name = a.name,
+                        totalBalance = a.balance
+                    })
+                    .ToListAsync();
 
-                List<AccountMetadata> accountMetadata = new List<AccountMetadata>();
-                accountMetadata = accounts.Select(x => new AccountMetadata { name = x.name, totalBalance = x.balance })
-                    .ToList();
+                var transactions = await _context.Transactions
+                    .Where(t => t.userId == userId)
+                    .ToListAsync();
+
+                var totalBalance = accounts.Sum(x => x.totalBalance);
+                var totalExpense = transactions
+                    .Where(t => t.type == TransactionEum.DEBIT)
+                    .Sum(t => t.amount);
+                var totalIncome = transactions
+                    .Where(t => t.type == TransactionEum.CREDIT)
+                    .Sum(t => t.amount);
+
+                var expanses = await (
+                    from transaction in _context.Transactions
+                    where transaction.userId == userId && transaction.type == TransactionType.DEBIT
+                    join category in _context.Categories
+                    on transaction.categoryId equals category.id
+                    select new
+                    {
+                        category = category.name,
+                        amount = transaction.amount
+                    })
+                    .GroupBy(grp => grp.category)
+                    .Select(g => new AccountExpanses
+                    {
+                        categoryName = g.Key,
+                        amount = g.Sum(x => x.amount)
+                    })
+                    .ToListAsync();
 
                 return new AccountMetadataMedia
                 {
-                    accounts = accountMetadata,
-                    totalBalance = accounts.Sum(x => x.balance),
-                    totalExpance = transactions.Where(t => t.type == TransactionEum.DEBIT).Sum(t => t.amount),
-                    totalIncome = transactions.Where(t => t.type == TransactionEum.CREDIT).Sum(t => t.amount)
+                    accounts = accounts,
+                    totalBalance = totalBalance,
+                    totalExpance = totalExpense,
+                    totalIncome = totalIncome,
+                    expanses = expanses
                 };
-
             }
             catch (Exception ex)
             {

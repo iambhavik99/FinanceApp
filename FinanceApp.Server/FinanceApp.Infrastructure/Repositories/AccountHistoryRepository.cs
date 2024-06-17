@@ -25,12 +25,14 @@ namespace FinanceApp.Application.Services
                     from transaction in _context.Transactions
                     join history in _context.AccountHistories
                     on transaction.id equals history.transactionId
+                    join category in _context.Categories
+                    on transaction.categoryId equals category.id
                     where transaction.userId == userId
                     select new
                     {
                         transactionId = transaction.id,
                         accountId = transaction.accountId,
-                        categoryId = history.categoryId,
+                        categoryName= category.name,
                         amount = history.amount,
                         balance = history.balance,
                         description = transaction.description,
@@ -47,23 +49,42 @@ namespace FinanceApp.Application.Services
                 var accountTransactionHistoryResponseMedia = new AccountTransactionHistoryResponseMedia();
                 foreach (var item in response)
                 {
+                    DateTimeOffset dto = new DateTimeOffset(item.timestamp);
+                    var unixTime = dto.ToUnixTimeMilliseconds();
+
                     accountTransactionHistoryResponseMedia.items
                         .Add(new AccountTransactionMedia()
                         {
                             accountId = item.accountId,
                             amount = item.amount,
                             balance = item.balance,
-                            categoryId = item.categoryId,
+                            categoryName = item.categoryName,
                             description = item.description,
                             transactionId = item.transactionId,
                             type = item.type,
-                            timestamp = item.timestamp.Millisecond
+                            timestamp = unixTime
                         });
                 }
 
-                accountTransactionHistoryResponseMedia.items = accountTransactionHistoryResponseMedia.items
-                    .OrderBy(a => a.timestamp)
+                var items = accountTransactionHistoryResponseMedia.items
+                    .OrderByDescending(a => a.timestamp)
+                    .Take(5).ToList();
+
+                // Get the current time and subtract 24 hours in milliseconds
+                var currentTimeMillis = DateTimeOffset.Now.ToUnixTimeMilliseconds();
+                var last24HoursMillis = currentTimeMillis - 24 * 60 * 60 * 1000;
+
+                var records = items.Where(x => x.timestamp >= last24HoursMillis)
+                    .Select(item => new AccountTransactionPreviewMedia()
+                    {
+                        balance = item.balance,
+                        timestamp = item.timestamp
+                    })
+                    .Take(10)
                     .ToList();
+
+                accountTransactionHistoryResponseMedia.items = items;
+                accountTransactionHistoryResponseMedia.records = records;
 
                 return accountTransactionHistoryResponseMedia;
             }

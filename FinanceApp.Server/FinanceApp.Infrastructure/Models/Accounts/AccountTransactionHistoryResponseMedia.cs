@@ -9,18 +9,25 @@ namespace FinanceApp.Infrastructure.Models.Accounts
     public class AccountTransactionHistoryResponseMedia
     {
         public List<AccountTransactionMedia> items { get; set; } = new List<AccountTransactionMedia>();
+        public List<AccountTransactionPreviewMedia> records { get; set; } = new List<AccountTransactionPreviewMedia>();
     }
 
     public class AccountTransactionMedia
     {
         public Guid accountId { get; set; }
         public Guid transactionId { get; set; }
-        public Guid categoryId { get; set; }
+        public string categoryName { get; set; }
         public string type { get; set; }
         public string description { get; set; }
         public decimal amount { get; set; }
         public decimal balance { get; set; }
-        public int timestamp { get; set; }
+        public long timestamp { get; set; }
+    }
+
+    public class AccountTransactionPreviewMedia
+    {
+        public long timestamp { get; set; }
+        public decimal balance { get; set; }
     }
 
 }
