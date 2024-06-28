@@ -36,6 +36,10 @@ $app-theme: mat.define-light-theme(
   )
 );
 
+@include mat.all-component-typographies(
+  mat.define-typography-config($font-family: "Archivo")
+);
+
 .mat-mdc-form-field {
   @include mat.form-field-density(minimum);
   @include mat.input-density(minimum);
@@ -57,7 +61,8 @@ body {
   font-family: "Archivo", "Helvetica Neue", sans-serif;
 }
 
-.mat-mdc-row {
+.mat-mdc-row,
+.mat-mdc-footer-cell {
   font-family: "Archivo", "Helvetica Neue", sans-serif !important;
 }
 
@@ -73,6 +78,7 @@ body {
 
 .mdc-button {
   height: 36px !important;
+  letter-spacing: normal;
 }
 
 .mdc-button.btn-primary {
@@ -105,4 +111,18 @@ mat-error {
 .mat-mdc-form-field-hint-wrapper,
 .mat-mdc-form-field-error-wrapper {
   padding-left: 4px !important;
+}
+
+.mat-mdc-header-cell {
+  font-weight: 600 !important;
+  color: #4b5563;
+}
+
+table {
+  font-size: 13px;
+}
+
+tr.mat-mdc-footer-row td {
+  font-weight: 600 !important;
+  color: #4b5563;
 }

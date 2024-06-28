@@ -1,1 +1,62 @@
-<p>transactions works!</p>
+<div class="w-full block md:flex" style="height: 100%">
+  <div
+    class="w-auto md:w-full bg-white border rounded-lg overflow-hidden m-2"
+    style="display: flex; flex-direction: column"
+  >
+    <div class="p-2 px-4 flex justify-start items-center">
+      <div class="text-teal-600 font-semibold text-md">Transactions</div>
+    </div>
+    <div class="px-0">
+      <div class="p-2">
+        <table mat-table [dataSource]="dataSource">
+          <ng-container matColumnDef="transactionDate">
+            <th mat-header-cell *matHeaderCellDef>Time</th>
+            <td mat-cell *matCellDef="let element">
+              <div class="text-sm mb-1">
+                {{ element.transactionDate | date : "MMM dd, YYYY hh:mm a" }}
+              </div>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="description">
+            <th mat-header-cell *matHeaderCellDef>Description</th>
+            <td mat-cell *matCellDef="let element">
+              <div class="text-sm mb-1">
+                {{ element.description }}
+              </div>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="amount">
+            <th mat-header-cell *matHeaderCellDef>Amount</th>
+            <td
+              mat-cell
+              *matCellDef="let element"
+              class="text-sm tracking-widest"
+            >
+              <div
+                class="flex items-center"
+                [ngClass]="[
+                  element.transactionType == 'DEBIT'
+                    ? 'text-red-600'
+                    : 'text-teal-700'
+                ]"
+              >
+                {{ element.transactionType == "DEBIT" ? "-" : "+" }}
+                {{ element.amount | currency : "INR" }}
+              </div>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+        <mat-paginator
+          [pageSize]="10"
+          [pageSizeOptions]="[10, 15, 25]"
+          [showFirstLastButtons]="true"
+        ></mat-paginator>
+      </div>
+    </div>
+  </div>
+</div>

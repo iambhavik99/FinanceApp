@@ -11,6 +11,14 @@ const routes: Routes = [
       {
         path: "dashboard",
         loadChildren: () => import('../dashboard/dashboard.module').then(m => m.DashboardModule)
+      },
+      {
+        path: 'accounts',
+        loadChildren: () => import('../accounts/accounts.module').then(m => m.AccountsModule),
+      },
+      {
+        path: 'transactions',
+        loadChildren: () => import('../transactions/transactions.module').then(m => m.TransactionsModule),
       }
     ]
   }

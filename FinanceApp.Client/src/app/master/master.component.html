@@ -1,22 +1,65 @@
-<mat-drawer-container class="example-container">
-  <mat-drawer mode="side" opened>
-    <div class="flex flex-1 items-center lg:mr-3 lg:flex-none">
-      <p class="m-3 text-center text-teal-700 text-lg font-semibold">
-        Finance tracker
-      </p>
-    </div>
-  </mat-drawer>
-  <mat-drawer-content>
+<mat-sidenav-container class="example-container h-screen" autosize>
+  <mat-sidenav
+    [mode]="isMobile ? 'over' : 'side'"
+    [opened]="isMobile ? false : true"
+    [ngClass]="!isCollapsed ? 'expanded' : ''"
+  >
+    <mat-nav-list>
+      <mat-list-item
+        style="height: 40px"
+        routerLink="dashboard"
+        routerLinkActive="active"
+      >
+        <div class="flex text-gray-600 text-sm">
+          <mat-icon class="mx-2">dashboard</mat-icon>
+          <span *ngIf="!isCollapsed">Dashboard</span>
+        </div>
+      </mat-list-item>
+
+      <mat-list-item
+        style="height: 40px"
+        routerLink="accounts"
+        routerLinkActive="active"
+      >
+        <div class="flex text-gray-600 text-sm">
+          <mat-icon class="mx-2">account_balance</mat-icon>
+          <span *ngIf="!isCollapsed">Accounts</span>
+        </div>
+      </mat-list-item>
+
+      <mat-list-item
+        style="height: 40px"
+        routerLink="transactions"
+        routerLinkActive="active"
+      >
+        <div class="flex text-gray-600 text-sm">
+          <mat-icon class="mx-2">sync_alt</mat-icon>
+          <span *ngIf="!isCollapsed">Transactions</span>
+        </div>
+      </mat-list-item>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content [ngClass]="isCollapsed ? 'side-drawer-expanded' : ''">
     <div class="relative inset-x-0 top-0 z-50">
       <div class="border-b">
-        <div class="mx-auto max-w-7xl py-2 px-2 sm:px-4 lg:px-4">
-          <div
-            class="flex items-center justify-start text-xl text-teal-700 font-bold"
-          >
-            Welcome, {{ userInfo.username }}
+        <div class="mx-auto py-2 px-2 sm:px-4 lg:px-4 flex items-center">
+          <div>
+            <button
+              mat-icon-button
+              aria-label="Menu icon"
+              class="mx-3"
+              (click)="toggleMenu()"
+            >
+              <mat-icon>menu</mat-icon>
+            </button>
           </div>
-          <div class="text-sm font-semibold">
-            Continue your journey to manage finance
+
+          <div>
+            <div
+              class="flex items-center justify-start text-lg text-teal-700 font-bold"
+            >
+              Welcome, {{ userInfo.username }}
+            </div>
           </div>
         </div>
       </div>
@@ -25,5 +68,5 @@
     <div class="container">
       <router-outlet></router-outlet>
     </div>
-  </mat-drawer-content>
-</mat-drawer-container>
+  </mat-sidenav-content>
+</mat-sidenav-container>

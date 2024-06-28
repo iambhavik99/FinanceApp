@@ -14,14 +14,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { TransactionsComponent } from './transactions/transactions.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
-    TransactionsComponent
+    LoginComponent
   ],
   imports: [
     BrowserModule,

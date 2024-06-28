@@ -1,5 +1,7 @@
 <div mat-dialog-title class="flex items-center">
-  <span class="text-teal-600 font-semibold text-md"> Add account </span>
+  <span class="text-teal-600 font-semibold text-md">
+    {{ data?.type === "DEBIT" ? "Expanse" : "Income" }}
+  </span>
 </div>
 <mat-dialog-content>
   <form [formGroup]="transactionForm" (submit)="saveTransaction()" class="py-2">
