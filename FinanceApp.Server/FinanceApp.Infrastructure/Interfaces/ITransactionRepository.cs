@@ -1,4 +1,5 @@
-﻿using FinanceApp.Infrastructure.Models.Transactions;
+﻿using FinanceApp.Infrastructure.Models.Common;
+using FinanceApp.Infrastructure.Models.Transactions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +10,8 @@ namespace FinanceApp.Infrastructure.Interfaces
 {
     public interface ITransactionRepository
     {
-        public Task<TransactionsResponseMedia> GetAllTransactions(Guid accountId, int limit);
-        public Task<bool> SaveTransaction(TransactionsRequestMedia transactionsRequestMedia, Guid userId);
+        public Task<TransactionsResponseMedia> GetAllTransactions(Guid accountId, PaginationModel paginationModel);
+        public Task<bool> SaveTransaction(TransactionsRequestMedia transactionsRequestMedia, Guid userId, bool updateBalanceAllowed = true);
 
     }
 }

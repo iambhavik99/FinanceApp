@@ -1,6 +1,7 @@
 ﻿using FinanceApp.Application.Interfaces;
 using FinanceApp.Domain.Models;
 using FinanceApp.Infrastructure.Interfaces;
+using FinanceApp.Infrastructure.Models.Common;
 using FinanceApp.Infrastructure.Models.Transactions;
 using System;
 using System.Collections.Generic;
@@ -17,15 +18,15 @@ namespace FinanceApp.Application.Services
         {
             _transactionRepository = transactionRepository;
         }
-        public async Task<TransactionsResponseMedia> GetAllTransactions(Guid accountId, int limit)
+        public async Task<TransactionsResponseMedia> GetAllTransactions(Guid accountId, PaginationModel paginationModel)
         {
-            var response = await _transactionRepository.GetAllTransactions(accountId, limit);
+            var response = await _transactionRepository.GetAllTransactions(accountId, paginationModel);
             return response;
         }
 
         public async Task<bool> SaveTransaction(TransactionsRequestMedia transactionsRequestMedia, Guid userId)
         {
-            var response = await _transactionRepository.SaveTransaction(transactionsRequestMedia, userId);
+            var response = await _transactionRepository.SaveTransaction(transactionsRequestMedia, userId, true);
             return response;
         }
     }

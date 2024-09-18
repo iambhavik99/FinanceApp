@@ -28,6 +28,7 @@ namespace FinanceApp.Infrastructure.Repositories
                 if (response.Count > 0)
                 {
                     categoriesResponseMedia.items = response
+                        .Where(x => x.name != "INITIAL_BALANCE")
                         .Select(x => new Category { id = x.id, name = x.name })
                         .ToList();
                 }

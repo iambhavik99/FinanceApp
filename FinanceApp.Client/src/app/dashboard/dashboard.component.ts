@@ -103,11 +103,11 @@ export class DashboardComponent implements OnInit {
         this.dataSource.data = this.accountTransactionHistoryResponseMedia.items;
       }
 
-      const dateTimeStampList = accountTransactionHistoryResponseMedia.records.map(x => new Date(x.timestamp * 1000));
-      const balanceList = accountTransactionHistoryResponseMedia.records.map(x => x.balance);
+      const dateTimeStampList = accountMetadataMedia.transactions.map(x => x.month);
+      const incomeAndExpanses = accountMetadataMedia.transactions.map(x => { return { income: x.income, expanse: x.expanse } });
       const expanses = accountMetadataMedia.expanses.map(x => { return { name: x.categoryName, value: x.amount } });
 
-      setLineChart("chart-view", dateTimeStampList, balanceList);
+      setLineChart("chart-view", dateTimeStampList, incomeAndExpanses);
       setPieChart("pie-chart-view", expanses);
 
     }

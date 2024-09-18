@@ -2,7 +2,7 @@ export class AccountMetadataMedia {
     totalBalance?: number;
     totalExpance?: number;
     totalIncome?: number;
-    accounts: AccountMetadata[] = [];
+    transactions: TransactionByMonthsMedia[] = [];
     expanses: AccountExpanses[] = []
 }
 
@@ -14,4 +14,10 @@ export class AccountMetadata {
 export class AccountExpanses {
     categoryName!: string;
     amount!: number;
+}
+
+export class TransactionByMonthsMedia {
+    income!: number;
+    expanse!: number;
+    month!: string;
 }

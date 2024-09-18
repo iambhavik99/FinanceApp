@@ -70,21 +70,7 @@ namespace FinanceApp.Application.Services
                     .OrderByDescending(a => a.timestamp)
                     .Take(5).ToList();
 
-                // Get the current time and subtract 24 hours in milliseconds
-                var currentTimeMillis = DateTimeOffset.Now.ToUnixTimeMilliseconds();
-                var last24HoursMillis = currentTimeMillis - 24 * 60 * 60 * 1000;
-
-                var records = items.Where(x => x.timestamp >= last24HoursMillis)
-                    .Select(item => new AccountTransactionPreviewMedia()
-                    {
-                        balance = item.balance,
-                        timestamp = item.timestamp
-                    })
-                    .Take(10)
-                    .ToList();
-
                 accountTransactionHistoryResponseMedia.items = items;
-                accountTransactionHistoryResponseMedia.records = records;
 
                 return accountTransactionHistoryResponseMedia;
             }

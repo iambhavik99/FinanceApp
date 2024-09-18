@@ -2,18 +2,18 @@ import * as echarts from 'echarts/core';
 import {
     GridComponent, GridComponentOption, TooltipComponent, TooltipComponentOption,
     VisualMapComponent,
-    VisualMapComponentOption
+    VisualMapComponentOption,
 } from 'echarts/components';
-import { LineChart, LineSeriesOption } from 'echarts/charts';
 import { UniversalTransition } from 'echarts/features';
 import { PieChart, PieSeriesOption } from 'echarts/charts';
 import { LabelLayout } from 'echarts/features';
 import { CanvasRenderer } from 'echarts/renderers';
+import { BarChart, BarSeriesOption } from 'echarts/charts';
 
-echarts.use([GridComponent, LineChart, CanvasRenderer, UniversalTransition, TooltipComponent]);
+echarts.use([GridComponent, BarChart, CanvasRenderer, UniversalTransition, TooltipComponent]);
 
 type EChartsOption = echarts.ComposeOption<
-    GridComponentOption | LineSeriesOption
+    GridComponentOption | BarSeriesOption
 >;
 
 interface DataItem {
@@ -25,29 +25,18 @@ interface DataItem {
 export function setLineChart(id: string, xAxisData: any[], yAxisData: any[]) {
 
     const eChartForLineChart = echarts;
-    eChartForLineChart.use([GridComponent, LineChart, CanvasRenderer, UniversalTransition, TooltipComponent]);
-
-    let data: DataItem[] = [];
-    for (var i = 0; i < xAxisData.length; i++) {
-        data.push({
-            name: xAxisData[i],
-            value: [xAxisData[i], yAxisData[i]]
-        });
-    }
+    eChartForLineChart.use([GridComponent, BarChart, CanvasRenderer, UniversalTransition, TooltipComponent]);
 
     var chartDom = document.getElementById(id)!;
     var myChart = eChartForLineChart.init(chartDom);
     var option: EChartsOption;
 
     option = {
-        color: ["#0d9488"],
+        color: ["#0d9488", "#dc2626"],
         tooltip: {
             trigger: 'axis',
             axisPointer: {
                 type: 'shadow',
-                label: {
-                    backgroundColor: '#6a7985'
-                }
             }
         },
         grid: {
@@ -57,12 +46,10 @@ export function setLineChart(id: string, xAxisData: any[], yAxisData: any[]) {
             top: '10%',
             containLabel: true
         },
-        xAxis: [
-            {
-                type: 'time',
-                show: false,
-            }
-        ],
+        xAxis: {
+            type: 'category',
+            data: xAxisData
+        },
         yAxis: [
             {
                 type: 'value',
@@ -71,13 +58,12 @@ export function setLineChart(id: string, xAxisData: any[], yAxisData: any[]) {
         ],
         series: [
             {
-                type: 'line',
-                smooth: true,
-                showSymbol: false,
-                areaStyle: {
-                    opacity: 0.06
-                },
-                data: data,
+                data: yAxisData.map(x => x.income),
+                type: 'bar'
+            },
+            {
+                data: yAxisData.map(x => x.expanse),
+                type: 'bar'
             }
         ]
     };
@@ -113,7 +99,7 @@ export function setPieChart(id: string, data: any) {
                     length: 10,
                     length2: 20
                 },
-                color: ['#5eead4', '#2dd4bf', '#14b8a6', '#0d9488', '#0f766e'],
+                color: ['#2dd4bf', '#14b8a6', '#0d9488', '#0f766e'],
                 animationType: 'scale',
                 animationEasing: 'elasticOut',
                 animationDelay: function (idx: number) {

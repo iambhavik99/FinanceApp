@@ -1,6 +1,7 @@
 ﻿using FinanceApp.Domain.DBContext;
 using FinanceApp.Domain.Models;
 using FinanceApp.Infrastructure.Interfaces;
+using FinanceApp.Infrastructure.Models.Common;
 using FinanceApp.Infrastructure.Models.Transactions;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -19,7 +20,8 @@ namespace FinanceApp.Infrastructure.Repositories
         {
             _context = context;
         }
-        public async Task<TransactionsResponseMedia> GetAllTransactions(Guid usersId, int limit)
+
+        public async Task<TransactionsResponseMedia> GetAllTransactions(Guid usersId, PaginationModel paginationModel)
         {
             var response = await (
                 from accout in _context.Accounts
@@ -31,6 +33,7 @@ namespace FinanceApp.Infrastructure.Repositories
                 .ToListAsync();
 
             TransactionsResponseMedia transactionsResponseMedia = new TransactionsResponseMedia();
+            transactionsResponseMedia.totalRecords = response.Count;
             transactionsResponseMedia.items = response
                 .Select(x => new TransactionMedia
                 {
@@ -43,15 +46,31 @@ namespace FinanceApp.Infrastructure.Repositories
                     note = x.note,
                     transactionDate = x.createdAt
                 })
-                .OrderByDescending(x => x.transactionDate)
-                .Take(limit)
                 .ToList();
+
+            if (paginationModel.sortBy == "asc")
+            {
+
+                transactionsResponseMedia.items = transactionsResponseMedia.items
+                    .OrderBy(x => paginationModel.sortBy)
+                    .Skip(paginationModel.pageIndex * paginationModel.pageSize)
+                    .Take(paginationModel.pageSize)
+                    .ToList();
+            }
+            else
+            {
+                transactionsResponseMedia.items = transactionsResponseMedia.items
+                    .OrderByDescending(x => paginationModel.sortBy)
+                    .Skip(paginationModel.pageIndex * paginationModel.pageSize)
+                    .Take(paginationModel.pageSize)
+                    .ToList();
+            }
 
             return transactionsResponseMedia;
 
         }
 
-        public async Task<bool> SaveTransaction(TransactionsRequestMedia transactionsRequestMedia, Guid userId)
+        public async Task<bool> SaveTransaction(TransactionsRequestMedia transactionsRequestMedia, Guid userId, bool updateBalanceAllowed)
         {
             try
             {
@@ -73,11 +92,11 @@ namespace FinanceApp.Infrastructure.Repositories
                     throw new Exception("Account not found");
                 }
 
-                if (transactions.type == TransactionType.CREDIT)
+                if (transactions.type == TransactionType.CREDIT && updateBalanceAllowed)
                 {
                     account.balance += transactions.amount;
                 }
-                else if (transactions.type == TransactionType.DEBIT)
+                else if (transactions.type == TransactionType.DEBIT && updateBalanceAllowed)
                 {
                     account.balance -= transactions.amount;
                 }

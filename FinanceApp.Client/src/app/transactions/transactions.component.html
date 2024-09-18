@@ -8,9 +8,16 @@
     </div>
     <div class="px-0">
       <div class="p-2">
-        <table mat-table [dataSource]="dataSource">
+        <table
+          mat-table
+          [dataSource]="dataSource"
+          matSort
+          [matSortActive]="paginationModel.sortBy"
+          [matSortDirection]="paginationModel.sortDirection"
+          (matSortChange)="sortData($event)"
+        >
           <ng-container matColumnDef="transactionDate">
-            <th mat-header-cell *matHeaderCellDef>Time</th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Time</th>
             <td mat-cell *matCellDef="let element">
               <div class="text-sm mb-1">
                 {{ element.transactionDate | date : "MMM dd, YYYY hh:mm a" }}
@@ -53,8 +60,11 @@
         </table>
         <mat-paginator
           [pageSize]="10"
+          [pageIndex]="paginationModel.pageIndex"
           [pageSizeOptions]="[10, 15, 25]"
           [showFirstLastButtons]="true"
+          [length]="transactionResponseMedia.totalRecords"
+          (page)="onPageChange($event)"
         ></mat-paginator>
       </div>
     </div>

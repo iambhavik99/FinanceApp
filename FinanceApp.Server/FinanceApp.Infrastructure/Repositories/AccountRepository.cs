@@ -58,11 +58,11 @@ namespace FinanceApp.Infrastructure.Repositories
             account.createdAt = DateTime.UtcNow;
             account.updatedAt = DateTime.UtcNow;
 
-            var category = await _context.Categories.FirstOrDefaultAsync(x => x.name == "BALANCE");
+            var category = await _context.Categories.FirstOrDefaultAsync(x => x.name == "INITIAL_BALANCE");
 
             TransactionsRequestMedia transactionsRequestMedia = new TransactionsRequestMedia();
             transactionsRequestMedia.accountId = account.id;
-            transactionsRequestMedia.amount = account.balance;
+            transactionsRequestMedia.amount = accountRequestMedia.balance;
             transactionsRequestMedia.note = "INITIAL BALANCE";
             transactionsRequestMedia.categoryId = category.id;
             transactionsRequestMedia.transactionType = TransactionType.CREDIT;
@@ -70,7 +70,7 @@ namespace FinanceApp.Infrastructure.Repositories
             await _context.Accounts.AddAsync(account);
             await _context.SaveChangesAsync();
 
-            await _transactionRepository.SaveTransaction(transactionsRequestMedia, accountRequestMedia.userId);
+            await _transactionRepository.SaveTransaction(transactionsRequestMedia, accountRequestMedia.userId, false);
 
             return await GetAccounts(accountRequestMedia.userId);
 
@@ -82,7 +82,7 @@ namespace FinanceApp.Infrastructure.Repositories
             {
                 var accounts = await _context.Accounts
                     .Where(a => a.userId == userId)
-                    .Select(a => new AccountMetadata
+                    .Select(a => new
                     {
                         name = a.name,
                         totalBalance = a.balance
@@ -119,13 +119,37 @@ namespace FinanceApp.Infrastructure.Repositories
                     })
                     .ToListAsync();
 
+
+
+                var transactionByMonthsMedias = new Dictionary<string, TransactionByMonthsMedia>();
+
+                foreach (var transaction in transactions.OrderBy(x => x.createdAt))
+                {
+                    var monthName = transaction.createdAt.ToString("MMM yy");
+
+                    if (!transactionByMonthsMedias.TryGetValue(monthName, out var transactionByMonthMedia))
+                    {
+                        transactionByMonthMedia = new TransactionByMonthsMedia() { month = monthName };
+                        transactionByMonthsMedias[monthName] = transactionByMonthMedia;
+                    }
+
+                    if (transaction.type == TransactionType.DEBIT)
+                    {
+                        transactionByMonthMedia.expanse += transaction.amount;
+                    }
+                    else
+                    {
+                        transactionByMonthMedia.income += transaction.amount;
+                    }
+                }
+
                 return new AccountMetadataMedia
                 {
-                    accounts = accounts,
                     totalBalance = totalBalance,
                     totalExpance = totalExpense,
                     totalIncome = totalIncome,
-                    expanses = expanses
+                    expanses = expanses,
+                    transactions = transactionByMonthsMedias.Values.ToList(),
                 };
             }
             catch (Exception ex)

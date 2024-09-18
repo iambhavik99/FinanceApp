@@ -16,6 +16,7 @@ export interface Transaction {
 
 export class TransactionResponseMedia implements ITransactionResponseMedia {
     items: Transaction[] = [];
+    totalRecords: number = 0;
 }
 
 

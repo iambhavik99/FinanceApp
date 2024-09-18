@@ -9,6 +9,7 @@ namespace FinanceApp.Infrastructure.Models.Transactions
     public class TransactionsResponseMedia
     {
        public List<TransactionMedia> items { get; set; }
+       public int totalRecords { get; set; }
     }
 
     public class TransactionMedia

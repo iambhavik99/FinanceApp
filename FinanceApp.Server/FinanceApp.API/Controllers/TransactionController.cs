@@ -1,6 +1,7 @@
 ﻿using FinanceApp.Application.Interfaces;
 using FinanceApp.Application.Services;
 using FinanceApp.Infrastructure.Models.Accounts;
+using FinanceApp.Infrastructure.Models.Common;
 using FinanceApp.Infrastructure.Models.Transactions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -21,11 +22,12 @@ namespace FinanceApp.API.Controllers
             _accountHistoryRepository = accountHistoryRepository;
         }
 
-        [HttpGet]
-        public async Task<ActionResult<TransactionsResponseMedia>> GetAllTransactions(int limit)
+        [HttpPost]
+        [Route("history")]
+        public async Task<ActionResult<TransactionsResponseMedia>> GetAllTransactions(PaginationModel paginationModel)
         {
             Guid userId = new Guid(User?.Claims?.FirstOrDefault(c => c?.Type == ClaimTypes.Actor).Value?.ToString());
-            var response = await _transactionService.GetAllTransactions(userId, limit);
+            var response = await _transactionService.GetAllTransactions(userId, paginationModel);
             if (response != null)
             {
                 return Ok(response);

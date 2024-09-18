@@ -1,4 +1,5 @@
-﻿using FinanceApp.Infrastructure.Models.Transactions;
+﻿using FinanceApp.Infrastructure.Models.Common;
+using FinanceApp.Infrastructure.Models.Transactions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace FinanceApp.Application.Interfaces
 {
     public interface ITransactionService
     {
-        public Task<TransactionsResponseMedia> GetAllTransactions(Guid accountId, int limit);
+        public Task<TransactionsResponseMedia> GetAllTransactions(Guid accountId, PaginationModel paginationModel);
         public Task<bool> SaveTransaction(TransactionsRequestMedia transactionsRequestMedia, Guid userId);
     }
 }
