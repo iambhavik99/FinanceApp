@@ -1,14 +1,14 @@
 # FinanceApp
 
-FinanceApp is a web application designed to help users track their income and expenses. It offers tools to manage multiple accounts, view detailed transaction history, and visualize financial data with interactive charts.
+FinanceApp is a web application designed to help users track income and expenses. It allows users to manage multiple accounts, track transactions, and view insightful charts that visualize financial data.
 
 ## Features
 
 - **Add Accounts**: Create and manage multiple financial accounts.
 - **Make Transactions**: Record income and expense transactions with categories.
-- **Monthly Overview**: Display a column chart comparing income vs. expenses for each month.
-- **Expense Breakdown**: View a pie chart to visualize where and how much expenses are made.
-- **Transaction History**: View a complete list of all transactions.
+- **Monthly Overview**: Visualize income vs. expenses with a monthly column chart.
+- **Expense Breakdown**: View a pie chart that shows expense distribution across categories.
+- **Transaction History**: Access a complete list of all past transactions.
 - **Manage Accounts**: View and manage all financial accounts in one place.
 
 ## Tech Stack
@@ -16,19 +16,64 @@ FinanceApp is a web application designed to help users track their income and ex
 - **Frontend**: Angular, TailwindCSS
 - **Backend**: .NET Core
 - **Database**: MySQL
-- **Charts**: Integration with charting libraries for visualizations (ApexCharts)
+- **Charts**: ApexCharts (for data visualization)
 - **Authentication**: JWT (or any preferred method)
 
+## Prerequisites
 
-### Prerequisites
+Make sure the following dependencies are installed on your system:
 
-Ensure you have the following installed:
+- [Node.js](https://nodejs.org/)
+- [Angular CLI](https://angular.io/cli)
+- [.NET Core SDK](https://dotnet.microsoft.com/download)
+- [MySQL](https://www.mysql.com/downloads/)
 
-- [Node.js](https://nodejs.org/) (for running Angular)
-- [Angular CLI](https://angular.io/cli) (for Angular development)
-- [.NET Core SDK](https://dotnet.microsoft.com/download) (for backend)
-- [MySQL](https://www.mysql.com/downloads/) (for database)
+## Installation
 
+### Frontend Setup
 
+1. Navigate to the `FinanceApp.Client` folder:
+   ```bash
+   cd FinanceApp/FinanceApp.Client
+   ```
+2. Install the dependencies and start the Angular development server:
+   ```bash
+   npm install
+   ng serve -o
+   ```
+3. Open the app in your browser at http://localhost:4200.
 
-   
+### Backend Setup
+
+1. Navigate to the FinanceApp.Server folder.
+
+2. Open the solution file (FinanceApp.Server.sln) in Visual Studio.
+
+3. Update the appsettings.json file with your MySQL connection string and AES encryption key. You can find this file at FinanceApp.Server/FinanceApp.API/appsettings.json.
+
+   Example appsettings.json configuration:
+
+   ```
+   {
+   "Logging": {
+       "LogLevel": {
+       "Default": "Information",
+       "Microsoft.AspNetCore": "Warning"
+       }
+   },
+   "AllowedHosts": "*",
+   "ConnectionStrings": {
+       "DefaultConnectionString": "server=localhost;user=root;database=<database_name>;password=<root_password>;"
+   },
+   "AES": {
+       "Key": "<YOUR_KEY>",
+       "IV": "<YOUR_INITIAL_VECTOR>"
+   }
+   }
+
+   ```
+
+4. Run the application using Visual Studio. Make sure your MySQL server is running, and the database configuration is correctly set up.
+
+## License
+This project is licensed under the MIT License. See the [LICENSE](https://github.com/iambhavik99/FinanceApp/tree/master?tab=MIT-1-ov-file) file for details.
