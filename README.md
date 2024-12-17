@@ -77,14 +77,14 @@ Make sure the following dependencies are installed on your system:
 
 
 ## Snapshots
+#### Dashboard
 ![image](https://github.com/user-attachments/assets/70cf00dc-667b-455f-83b6-99aeb9a49016)
-Dashboard
+#### Add Expanses or Incomes
 ![image](https://github.com/user-attachments/assets/e92d3669-1c90-4dd1-8a88-f86d96513804)
-Add Expanses or Incomes
+#### All Transactions
 ![image](https://github.com/user-attachments/assets/944ef5f1-967d-480e-873c-30cd76ce608f)
-All Transactions
+#### Add new Account to manage
 ![image](https://github.com/user-attachments/assets/271963cf-b0cd-4438-ba46-ea6319f3ad54)
-Add new Account to manage
 
 ## License
 This project is licensed under the MIT License. See the [LICENSE](https://github.com/iambhavik99/FinanceApp/tree/master?tab=MIT-1-ov-file) file for details.
